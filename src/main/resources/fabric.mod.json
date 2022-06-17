@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "afkdisplay",
+  "version": "${version}",
+
+  "name": "AfkDisplay",
+  "description": "Show which players are afk in the player list",
+  "authors": [
+    "beabfc"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "https://github.com/beabfc/afkdisplay"
+  },
+
+  "license": "MIT",
+  "icon": "assets/afkdisplay/icon.png",
+
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "io.github.beabfc.afkdisplay.AfkDisplay"
+    ]
+  },
+  "mixins": [
+    "afkdisplay.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "minecraft": "~1.18.2",
+    "java": ">=17"
+  }
+}
