@@ -7,7 +7,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -63,7 +62,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         Text name = player.getName().copy();
         Formatting color = Formatting.byName(AfkDisplay.CONFIG.afkColor);
         if (color == null) color = Formatting.RESET;
-        MutableText prefix = new LiteralText(AfkDisplay.CONFIG.afkPrefix).formatted(color);
+        MutableText prefix = Text.literal(AfkDisplay.CONFIG.afkPrefix).formatted(color);
         if (isAfk) cir.setReturnValue(prefix.append(name));
     }
 }

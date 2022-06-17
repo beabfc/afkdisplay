@@ -17,15 +17,8 @@ public abstract class ServerPlayNetworkMixin {
     @Shadow
     public ServerPlayerEntity player;
 
-    //@Shadow
-    //private double lastTickX, updatedX, lastTickY, updatedY, lastTickZ, updatedZ;
-
     @Inject(method = "tick", at = @At("HEAD"))
     private void updateAfkStatus(CallbackInfo ci) {
-        /*if (this.lastTickX != updatedX || lastTickY != updatedY || lastTickZ != updatedZ) {
-            player.updateLastActionTime();
-            return;
-        }*/
 
         AfkPlayer afkPlayer = (AfkPlayer) player;
         if (afkPlayer.isAfk()) return;
