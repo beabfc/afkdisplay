@@ -6,6 +6,8 @@ Show which players are afk in the player list.
 
 ## Configuration
 
+The configuration is located in `afkdisplay.toml` inside your servers config folder.
+
 - `timeoutSeconds` the amount of time in seconds after which a player will be considered afk _(default: 180)_
 - `resetOnMovement` consider players that moved no longer afk (enables easy bypass methods like afk pools, _default:
   false_)
