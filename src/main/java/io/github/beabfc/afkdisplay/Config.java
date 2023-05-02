@@ -8,11 +8,32 @@ import java.io.File;
 
 
 public class Config {
-    public int timeoutSeconds = 180;
-    public boolean resetOnMovement = false;
-    public boolean resetOnLook = false;
-    public String afkColor = "gray";
-    public String afkPrefix = "[AFK] ";
+    public boolean enableAfkCommand = true;
+    public String afkPlaceholder = "[AFK]";
+    public PacketOptions packetOptions = new PacketOptions();
+    public PlayerListOptions playerListOptions = new PlayerListOptions();
+    public MessageOptions messageOptions = new MessageOptions();
+
+    public static class PacketOptions {
+        public int timeoutSeconds = 180;
+        public boolean resetOnMovement = false;
+        public boolean resetOnLook = false;
+
+    }
+
+    public static class PlayerListOptions {
+        public boolean enableListDisplay = true;
+        public String afkColor = "gray";
+        public String afkPlayerName = "[AFK] %player:displayname%";
+    }
+
+    public static class MessageOptions {
+        public boolean enableChatMessages = true;
+        public String messageColor = "yellow";
+        public String wentAfk = "%player:displayname% is now AFK";
+        public String returned = "%player:displayname% is no longer AFK";
+    }
+
 
     public static Config load(String configName) {
         try {

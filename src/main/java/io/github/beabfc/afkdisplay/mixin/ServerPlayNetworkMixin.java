@@ -19,19 +19,19 @@ public abstract class ServerPlayNetworkMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void updateAfkStatus(CallbackInfo ci) {
-
         AfkPlayer afkPlayer = (AfkPlayer) player;
-        if (afkPlayer.isAfk()) return;
+        int timeoutSeconds = AfkDisplay.CONFIG.packetOptions.timeoutSeconds;
+        if (afkPlayer.isAfk() || timeoutSeconds <= 0) return;
         long afkDuration = Util.getMeasuringTimeMs() - this.player.getLastActionTime();
-        if (afkDuration > AfkDisplay.CONFIG.timeoutSeconds * 1000L) {
-            afkPlayer.setAfk(true);
+        if (afkDuration > timeoutSeconds * 1000L) {
+            afkPlayer.enableAfk();
         }
     }
 
     @Inject(method = "onPlayerMove", at = @At("HEAD"))
     private void checkPlayerLook(PlayerMoveC2SPacket packet, CallbackInfo ci) {
         // just checking for changesLook on the packet doesn't work
-        if (AfkDisplay.CONFIG.resetOnLook && packet.changesLook()) {
+        if (AfkDisplay.CONFIG.packetOptions.resetOnLook && packet.changesLook()) {
             float yaw = player.getYaw();
             float pitch = player.getPitch();
             if (pitch != packet.getPitch(pitch) || yaw != packet.getYaw(yaw)) player.updateLastActionTime();

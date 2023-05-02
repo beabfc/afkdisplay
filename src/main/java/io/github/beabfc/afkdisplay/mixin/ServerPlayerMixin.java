@@ -1,13 +1,13 @@
 package io.github.beabfc.afkdisplay.mixin;
 
-import io.github.beabfc.afkdisplay.AfkDisplay;
+import eu.pb4.placeholders.api.PlaceholderContext;
+import eu.pb4.placeholders.api.Placeholders;
 import io.github.beabfc.afkdisplay.AfkPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
@@ -19,6 +19,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static io.github.beabfc.afkdisplay.AfkDisplay.CONFIG;
+
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
@@ -37,7 +40,30 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         return this.isAfk;
     }
 
-    public void setAfk(boolean isAfk) {
+    public void enableAfk() {
+        if (isAfk()) return;
+        setAfk(true);
+        sendAfkMessage(Placeholders.parseText(Text.of(CONFIG.messageOptions.wentAfk), PlaceholderContext.of(this)));
+    }
+
+    public void disableAfk() {
+        if (!isAfk) return;
+        setAfk(false);
+        sendAfkMessage(Placeholders.parseText(Text.of(CONFIG.messageOptions.returned), PlaceholderContext.of(this)));
+    }
+
+    private void sendAfkMessage(Text text) {
+        if (!CONFIG.messageOptions.enableChatMessages || text.getString().trim().length() == 0) return;
+        Formatting color = Formatting.byName(CONFIG.messageOptions.messageColor);
+        if (color == null) color = Formatting.RESET;
+
+        server.sendMessage(text);
+        for (ServerPlayerEntity player : this.server.getPlayerManager().getPlayerList()) {
+            player.sendMessage(text.copy().formatted(color));
+        }
+    }
+
+    private void setAfk(boolean isAfk) {
         this.isAfk = isAfk;
         this.server
             .getPlayerManager()
@@ -46,12 +72,11 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
 
     @Inject(method = "updateLastActionTime", at = @At("TAIL"))
     private void onActionTimeUpdate(CallbackInfo ci) {
-        if (!isAfk) return;
-        setAfk(false);
+        disableAfk();
     }
 
     public void setPosition(double x, double y, double z) {
-        if (AfkDisplay.CONFIG.resetOnMovement && (this.getX() != x || this.getY() != y || this.getZ() != z)) {
+        if (CONFIG.packetOptions.resetOnMovement && (this.getX() != x || this.getY() != y || this.getZ() != z)) {
             player.updateLastActionTime();
         }
         super.setPosition(x, y, z);
@@ -59,10 +84,15 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
 
     @Inject(method = "getPlayerListName", at = @At("RETURN"), cancellable = true)
     private void replacePlayerListName(CallbackInfoReturnable<Text> cir) {
-        Text name = player.getName().copy();
-        Formatting color = Formatting.byName(AfkDisplay.CONFIG.afkColor);
-        if (color == null) color = Formatting.RESET;
-        MutableText prefix = Text.literal(AfkDisplay.CONFIG.afkPrefix).formatted(color);
-        if (isAfk) cir.setReturnValue(prefix.append(name));
+        if (CONFIG.playerListOptions.enableListDisplay && isAfk) {
+            Formatting color = Formatting.byName(CONFIG.playerListOptions.afkColor);
+            if (color == null) color = Formatting.RESET;
+
+            Text listEntry = Placeholders.parseText(
+                Text.of(CONFIG.playerListOptions.afkPlayerName),
+                PlaceholderContext.of(this));
+            cir.setReturnValue(listEntry.copy().formatted(color));
+        }
+
     }
 }
