@@ -6,10 +6,10 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.File;
 
-
 public class Config {
     public boolean enableAfkCommand = true;
     public String afkPlaceholder = "[AFK]";
+    public String afkDisplayPlaceholder = "<i><gray>%player:displayname%[AFK]</i></gray>";
     public PacketOptions packetOptions = new PacketOptions();
     public PlayerListOptions playerListOptions = new PlayerListOptions();
     public MessageOptions messageOptions = new MessageOptions();
@@ -34,11 +34,10 @@ public class Config {
         public String returned = "%player:displayname% is no longer AFK";
     }
 
-
     public static Config load(String configName) {
         try {
             File configFile = FabricLoader.getInstance().getConfigDir().resolve(configName).toFile();
-            //noinspection ResultOfMethodCallIgnored
+            // noinspection ResultOfMethodCallIgnored
             configFile.createNewFile();
             Config config = new Toml().read(configFile).to(Config.class);
             new TomlWriter().write(config, configFile);

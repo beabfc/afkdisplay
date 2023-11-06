@@ -12,7 +12,8 @@ public class AfkDisplay implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
         if (CONFIG.enableAfkCommand) {
-            CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> AfkCommand.register(dispatcher));
+            CommandRegistrationCallback.EVENT
+                    .register((dispatcher, registryAccess, environment) -> AfkCommand.register(dispatcher));
         }
 
         Placeholders.register(new Identifier("player", "afk"), (ctx, arg) -> {
@@ -22,6 +23,15 @@ public class AfkDisplay implements DedicatedServerModInitializer {
             AfkPlayer player = (AfkPlayer) ctx.player();
             assert player != null;
             String result = player.isAfk() ? CONFIG.afkPlaceholder : "";
+            return PlaceholderResult.value(result);
+        });
+        Placeholders.register(new Identifier("player", "afknamedisplay"), (ctx, arg) -> {
+            if (!ctx.hasPlayer()) {
+                return PlaceholderResult.invalid("No player!");
+            }
+            AfkPlayer player = (AfkPlayer) ctx.player();
+            assert player != null;
+            String result = player.isAfk() ? CONFIG.afkDisplayPlaceholder : "";
             return PlaceholderResult.value(result);
         });
     }
