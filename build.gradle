@@ -35,7 +35,7 @@ dependencies {
 	modImplementation(include("eu.pb4:placeholder-api:${project.placeholder_api_version}"))
 
 	// luckperms API
-	modImplementation include("me.lucko:fabric-permissions-api:0.2-SNAPSHOT")
+	//modImplementation include("me.lucko:fabric-permissions-api:0.2-SNAPSHOT")
 	
 	// toml4j for config
 	implementation include("com.moandjiezana.toml:toml4j:${project.toml4j_version}")

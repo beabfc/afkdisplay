@@ -3,8 +3,10 @@ package io.github.beabfc.afkdisplay;
 import com.mojang.brigadier.CommandDispatcher;
 //import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+
+//import me.lucko.fabric.api.permissions.v0.Permissions;
 //import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.lucko.fabric.api.permissions.v0.Permissions;
+//import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -22,20 +24,17 @@ public class AfkDisplayCommand {
             CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(
                 literal("afkdisplay")
-                        .requires(Permissions.require("afkdisplay.main", true))
+                        .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                         .executes(AfkDisplayCommand::about)
 
                         .then(literal("reload")
-                                .requires(Permissions.require("afkdisplay.reload", 3))
                                 .executes(AfkDisplayCommand::reload))
                         .then(literal("set")
-                                .requires(Permissions.require("afkdisplay.set", 3))
                                 .then(argument("player", EntityArgumentType.player())
-                                        .executes(ctx -> setAfkDisplay(EntityArgumentType.getPlayer(ctx, "player")))))
+                                        .executes(ctx -> setAfk(EntityArgumentType.getPlayer(ctx, "player")))))
                         .then(literal("clear")
-                                .requires(Permissions.require("afkdisplay.clear", 3))
                                 .then(argument("player", EntityArgumentType.player())
-                                        .executes(ctx -> setAfkDisplay(EntityArgumentType.getPlayer(ctx, "player")))))
+                                        .executes(ctx -> clearAfk(EntityArgumentType.getPlayer(ctx, "player")))))
 
         // .executes(ctx -> setAfk(ctx.getSource()))
         // .then(argument("player", EntityArgumentType.player())
@@ -61,16 +60,26 @@ public class AfkDisplayCommand {
         return 1;
     }
 
-    // private static int setAfkDisplay(ServerCommandSource src) throws
+    // private static int setAfk(ServerCommandSource src) throws
     // CommandSyntaxException {
     // AfkPlayer player = (AfkPlayer) src.getPlayerOrThrow();
     // player.enableAfk();
     // return 1;
     // }
 
-    private static int setAfkDisplay(ServerPlayerEntity player) {
+    private static int setAfk(ServerPlayerEntity player) {
         AfkPlayer afkPlayer = (AfkPlayer) player;
-        afkPlayer.enableAfk();
+        if (afkPlayer.isAfk()) {
+            afkPlayer.disableAfk();
+        } else {
+            afkPlayer.enableAfk();
+        }
+        return 1;
+    }
+
+    private static int clearAfk(ServerPlayerEntity player) {
+        AfkPlayer afkPlayer = (AfkPlayer) player;
+        afkPlayer.disableAfk();
         return 1;
     }
 

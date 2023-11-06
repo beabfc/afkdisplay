@@ -9,7 +9,7 @@ import java.io.File;
 public class Config {
     public boolean enableAfkCommand = true;
     public String afkPlaceholder = "[AFK]";
-    public String afkDisplayPlaceholder = "<i><gray>%player:displayname%[AFK]</i></gray>";
+    public String afkDisplayPlaceholder = "<i><gray>[AFK] %player:displayname%</i></gray>";
     public PacketOptions packetOptions = new PacketOptions();
     public PlayerListOptions playerListOptions = new PlayerListOptions();
     public MessageOptions messageOptions = new MessageOptions();
