@@ -4,9 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 //import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 
-//import me.lucko.fabric.api.permissions.v0.Permissions;
 //import com.mojang.brigadier.exceptions.CommandSyntaxException;
-//import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -34,15 +32,7 @@ public class AfkDisplayCommand {
                                         .executes(ctx -> setAfk(EntityArgumentType.getPlayer(ctx, "player")))))
                         .then(literal("clear")
                                 .then(argument("player", EntityArgumentType.player())
-                                        .executes(ctx -> clearAfk(EntityArgumentType.getPlayer(ctx, "player")))))
-
-        // .executes(ctx -> setAfk(ctx.getSource()))
-        // .then(argument("player", EntityArgumentType.player())
-        // .requires(src ->
-        // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
-        // .executes(ctx -> setAfk(EntityArgumentType.getPlayer(ctx, "player")))
-        // )
-        );
+                                        .executes(ctx -> clearAfk(EntityArgumentType.getPlayer(ctx, "player"))))));
 
     }
 
@@ -60,15 +50,9 @@ public class AfkDisplayCommand {
         return 1;
     }
 
-    // private static int setAfk(ServerCommandSource src) throws
-    // CommandSyntaxException {
-    // AfkPlayer player = (AfkPlayer) src.getPlayerOrThrow();
-    // player.enableAfk();
-    // return 1;
-    // }
-
     private static int setAfk(ServerPlayerEntity player) {
         AfkPlayer afkPlayer = (AfkPlayer) player;
+
         if (afkPlayer.isAfk()) {
             afkPlayer.disableAfk();
         } else {
@@ -79,6 +63,7 @@ public class AfkDisplayCommand {
 
     private static int clearAfk(ServerPlayerEntity player) {
         AfkPlayer afkPlayer = (AfkPlayer) player;
+
         afkPlayer.disableAfk();
         return 1;
     }

@@ -2,7 +2,6 @@ package io.github.beabfc.afkdisplay;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-//import me.lucko.fabric.api.permissions.v0.Permissions;
 //import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 //import net.minecraft.server.network.ServerPlayerEntity;
@@ -15,8 +14,6 @@ public class AfkCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 literal("afk")
-                        // To lock it behind Luck permissions ...
-                        // .requires(Permissions.require("afkdisplay.afk", true))
                         .executes(ctx -> setAfk(ctx.getSource())));
         // Moved to /afkdisplay command
         // .then(argument("player", EntityArgumentType.player())
