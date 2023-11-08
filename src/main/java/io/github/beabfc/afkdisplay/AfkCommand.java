@@ -24,11 +24,11 @@ public class AfkCommand {
 
     private static int setAfk(ServerCommandSource src) throws CommandSyntaxException {
         AfkPlayer player = (AfkPlayer) src.getPlayerOrThrow();
-        if (player.isAfk()) {
-            player.disableAfk();
-        } else {
-            player.enableAfk();
-        }
+        // if (player.isAfk()) {
+        // player.disableAfk();
+        // } else {
+        player.enableAfk();
+        // }
         return 1;
     }
 

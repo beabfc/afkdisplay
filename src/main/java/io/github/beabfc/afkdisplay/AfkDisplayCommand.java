@@ -5,9 +5,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 
 //import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.CommandRegistryAccess;
+//import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.server.command.CommandManager;
+//import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -18,19 +18,21 @@ import net.minecraft.text.Text;
 
 public class AfkDisplayCommand {
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess,
-            CommandManager.RegistrationEnvironment environment) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 literal("afkdisplay")
                         .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                         .executes(AfkDisplayCommand::about)
 
                         .then(literal("reload")
+                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .executes(AfkDisplayCommand::reload))
                         .then(literal("set")
+                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
                                         .executes(ctx -> setAfk(EntityArgumentType.getPlayer(ctx, "player")))))
                         .then(literal("clear")
+                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
                                         .executes(ctx -> clearAfk(EntityArgumentType.getPlayer(ctx, "player"))))));
 
@@ -45,7 +47,7 @@ public class AfkDisplayCommand {
     }
 
     private static int reload(CommandContext<ServerCommandSource> context) {
-        Config.load("afkdisplay.toml");
+        ConfigManager.loadConfig();
         context.getSource().sendFeedback(() -> Text.literal("Reloaded config!"), false);
         return 1;
     }
