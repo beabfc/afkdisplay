@@ -1,5 +1,6 @@
 package io.github.beabfc.afkdisplay;
 
+import static io.github.beabfc.afkdisplay.ConfigManager.CONFIG;
 import eu.pb4.placeholders.api.PlaceholderResult;
 import eu.pb4.placeholders.api.Placeholders;
 import net.fabricmc.api.DedicatedServerModInitializer;
@@ -10,12 +11,13 @@ import net.minecraft.util.Identifier;
 
 public class AfkDisplay implements DedicatedServerModInitializer {
     public static final ModContainer CONTAINER = FabricLoader.getInstance().getModContainer("afkdisplay").get();
-    public static final ConfigData CONFIG = ConfigManager.getConfig();
 
     @Override
     public void onInitializeServer() {
         AfkDisplayInfo.build(CONTAINER);
-        if (CONFIG.enableAfkCommand) {
+        ConfigManager.initConfig();
+        ConfigManager.loadConfig();
+        if (CONFIG.afkDisplayOptions.enableAfkCommand) {
             CommandRegistrationCallback.EVENT
                     .register((dispatcher, registryAccess, environment) -> AfkCommand.register(dispatcher));
         }
@@ -27,7 +29,7 @@ public class AfkDisplay implements DedicatedServerModInitializer {
             }
             AfkPlayer player = (AfkPlayer) ctx.player();
             assert player != null;
-            String result = player.isAfk() ? CONFIG.afkPlaceholder : "";
+            String result = player.isAfk() ? CONFIG.afkDisplayOptions.afkPlaceholder : "";
             return PlaceholderResult.value(result);
         });
         Placeholders.register(new Identifier("player", "afknamedisplay"), (ctx, arg) -> {
@@ -36,7 +38,7 @@ public class AfkDisplay implements DedicatedServerModInitializer {
             }
             AfkPlayer player = (AfkPlayer) ctx.player();
             assert player != null;
-            String result = player.isAfk() ? CONFIG.afkDisplayPlaceholder : "";
+            String result = player.isAfk() ? CONFIG.afkDisplayOptions.afkDisplayPlaceholder : "";
             return PlaceholderResult.value(result);
         });
     }

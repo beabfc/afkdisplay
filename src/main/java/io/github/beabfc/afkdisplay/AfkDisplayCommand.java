@@ -1,20 +1,13 @@
 package io.github.beabfc.afkdisplay;
 
 import com.mojang.brigadier.CommandDispatcher;
-//import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-
-//import com.mojang.brigadier.exceptions.CommandSyntaxException;
-//import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.EntityArgumentType;
-//import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 import net.minecraft.text.Text;
-//import org.w3c.dom.Text;
 
 public class AfkDisplayCommand {
 
@@ -47,7 +40,7 @@ public class AfkDisplayCommand {
     }
 
     private static int reload(CommandContext<ServerCommandSource> context) {
-        ConfigManager.loadConfig();
+        ConfigManager.reloadConfig();
         context.getSource().sendFeedback(() -> Text.literal("Reloaded config!"), false);
         return 1;
     }
@@ -69,5 +62,4 @@ public class AfkDisplayCommand {
         afkPlayer.disableAfk();
         return 1;
     }
-
 }
