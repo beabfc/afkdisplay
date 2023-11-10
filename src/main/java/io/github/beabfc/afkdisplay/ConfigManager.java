@@ -3,6 +3,9 @@ package io.github.beabfc.afkdisplay;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import net.fabricmc.loader.api.FabricLoader;
+
+import static io.github.beabfc.afkdisplay.AfkDisplay.MOD_ID;
+
 import java.io.File;
 
 public class ConfigManager {
@@ -25,11 +28,12 @@ public class ConfigManager {
     }
 
     public static void loadConfig() {
-        File conf = FabricLoader.getInstance().getConfigDir().resolve("afkdisplay.toml").toFile();
+        File conf = FabricLoader.getInstance().getConfigDir().resolve(MOD_ID).toFile();
         try {
             if (conf.exists()) {
                 CONFIG = new Toml().read(conf).to(ConfigData.class);
             } else {
+                AfkDisplayLogger.info("Config not found, creating new file.");
                 initConfig();
                 conf.createNewFile();
             }
@@ -40,6 +44,7 @@ public class ConfigManager {
     }
 
     public static void reloadConfig() {
+        AfkDisplayLogger.info("Reloading Config.");
         loadConfig();
     }
 }

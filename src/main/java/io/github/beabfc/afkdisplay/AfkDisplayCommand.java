@@ -16,26 +16,26 @@ public class AfkDisplayCommand {
                 literal("afkdisplay")
                         .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                         .executes(AfkDisplayCommand::about)
-
                         .then(literal("reload")
-                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                // .requires(src ->
+                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .executes(AfkDisplayCommand::reload))
                         .then(literal("set")
-                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                // .requires(src ->
+                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
                                         .executes(ctx -> setAfk(EntityArgumentType.getPlayer(ctx, "player")))))
                         .then(literal("clear")
-                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                // .requires(src ->
+                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
                                         .executes(ctx -> clearAfk(EntityArgumentType.getPlayer(ctx, "player"))))));
 
     }
 
     private static int about(CommandContext<ServerCommandSource> context) {
-        for (var text : context.getSource().getEntity() instanceof ServerPlayerEntity ? AfkDisplayInfo.getAbout()
-                : AfkDisplayInfo.getAbout()) {
-            context.getSource().sendFeedback(() -> text, false);
-        }
+        Text ModInfo = AfkDisplayInfo.getModInfo();
+        context.getSource().sendFeedback(() -> ModInfo, false);
         return 1;
     }
 
