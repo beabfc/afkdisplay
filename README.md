@@ -1,15 +1,16 @@
 ## AfkDisplay
 
-# SAKURAS-ENHANCEMENTS
-- Added '/afkdisplay reload' command.  This allows an Administrator to reload the configuration while the server is running.
-- Added '/afkdisplay set [Player]' command.  This allows any administrator to set the AFK status of a player.
-- Added '/afkdisplay clear [Player]' command.  This allows any administrator to clear the AFK status of a player.
-- [REWRITE]: Added a Config File manager to allow the /afkdisplay reload command to work.
-- FIXME: Added a security permissions configuration for the '/afkdisplay' command (FOR future LP permissions support).
-- Added a placeholder %player:afkdisplayname% so that you can use this as a replacement for the %player:displayname% placeholder under other Mods, such as Styled Playerlist.
+**SAKURAS-ENHANCEMENTS** :blush:
+- Added '**/afkdisplay reload**' command.  This allows an Administrator to reload the configuration while the server is running.
+- Added '**/afkdisplay set [Player]**' command.  This allows any administrator to set the AFK status of a player.
+- Added '**/afkdisplay clear [Player]**' command.  This allows any administrator to clear the AFK status of a player.
+- ***[REWRITE]***: Added a Config File manager to allow the '**/afkdisplay reload**' command to work.
+- **FIXME**: Added a security permissions configuration for the **'/afkdisplay**' command (FOR future LP permissions support).
+- Added a placeholder **%player:afkdisplayname%** so that you can use this as a replacement for the **%player:displayname%** placeholder under other Mods, such as [Styled Playerlist](https://modrinth.com/mod/styledplayerlist "Styled Playerlist").
 ***NOTE that this method was designed to be fully compliant with LuckPerms Prefixes under Styled Playerlist, because the standard method for playerlist updating fails, or you can simply use %player:afk% to format names if you like.***
 
-Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support, [ENHANCEMENT] now supporting all Placeholder API formatting nodes such as: yellow or bold natively; which depreciates all of the old "color" specific settings.
+## Original README:
+Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support, **[ENHANCEMENT]** now supporting all Placeholder API formatting nodes such as: yellow or bold natively; which depreciates all of the old "color" specific settings.
 
 ![Player list with afk players](https://i.ibb.co/QvcSv1x/list.png)
 
