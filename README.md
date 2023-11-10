@@ -5,8 +5,8 @@
 - Added '/afkdisplay set [Player]' command.  This allows any administrator to set the AFK status of a player.
 - Added '/afkdisplay clear [Player]' command.  This allows any administrator to clear the AFK status of a player.
 - [REWRITE]: Added a Config File manager to allow the /afkdisplay reload command to work.
-- FIXME: Added a security permissions configuration for the '/afkdisplay' command (Future LP support).
-- Added a placeholder %player:afkdisplayname% so that you can use this as a replacement for the %player:displayname% placeholder under other Mods, such as Styled Playerlist.
+- FIXME: Added a security permissions configuration for the '/afkdisplay' command (FOR future LP permissions support).
+- Added a placeholder %player:afkdisplayname% so that you can use this as a replacement for the %player:displayname% placeholder under other Mods, such as Styled Playerlist.  **Note that this method was designed to be fully compliant with LuckPerms Prefixes under Styled Playerlist.**
 
 Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support, [ENHANCEMENT] now supporting all Placeholder API formatting nodes such as: yellow or bold natively; which depreciates all of the old "color" specific settings.
 
@@ -26,7 +26,9 @@ afkDisplayCommandPermissions = "3"
 # This will be the value of the placeholder %player:afk% if a player is AFK, [ENHANCEMENT] option now accepts formatting nodes
 afkPlaceholder = "<i><gray>[AFK]<r>"
 # [ENHANCEMENT] a new placeholder %player:afkdisplayname% for backporting the entire %displayname% for use in other Mods, such as Styled Playerlist
-afkDisplayPlaceholder = "<i><gray>[AFK] %player:displayname_unformatted%<r>"
+afkDisplayPlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>"
+# [ENHANCEMENT] value for when player is NOT AFK, (ie. the default displayname)
+afkDisplayPlaceholder = "%player:displayname%"
 
 [packetOptions]
 # The time without actions after which a player is considered AFK. Set to -1 to disable automatic AFK detection.
