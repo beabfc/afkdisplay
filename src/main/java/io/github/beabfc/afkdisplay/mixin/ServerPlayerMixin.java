@@ -2,6 +2,7 @@ package io.github.beabfc.afkdisplay.mixin;
 
 import eu.pb4.placeholders.api.PlaceholderContext;
 import eu.pb4.placeholders.api.Placeholders;
+import eu.pb4.placeholders.api.TextParserUtils;
 import io.github.beabfc.afkdisplay.AfkPlayer;
 import static io.github.beabfc.afkdisplay.ConfigManager.CONFIG;
 import net.minecraft.entity.Entity;
@@ -10,7 +11,6 @@ import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,26 +42,24 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         if (isAfk())
             return;
         setAfk(true);
-        sendAfkMessage(Placeholders.parseText(Text.of(CONFIG.messageOptions.wentAfk), PlaceholderContext.of(this)));
+        sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
+                PlaceholderContext.of(this)));
     }
 
     public void disableAfk() {
         if (!isAfk)
             return;
         setAfk(false);
-        sendAfkMessage(Placeholders.parseText(Text.of(CONFIG.messageOptions.returned), PlaceholderContext.of(this)));
+        sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.returned),
+                PlaceholderContext.of(this)));
     }
 
     private void sendAfkMessage(Text text) {
         if (!CONFIG.messageOptions.enableChatMessages || text.getString().trim().length() == 0)
             return;
-        Formatting color = Formatting.byName(CONFIG.messageOptions.messageColor);
-        if (color == null)
-            color = Formatting.RESET;
-
         server.sendMessage(text);
         for (ServerPlayerEntity player : this.server.getPlayerManager().getPlayerList()) {
-            player.sendMessage(text.copy().formatted(color));
+            player.sendMessage(text);
         }
     }
 
@@ -87,15 +85,10 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     @Inject(method = "getPlayerListName", at = @At("RETURN"), cancellable = true)
     private void replacePlayerListName(CallbackInfoReturnable<Text> cir) {
         if (CONFIG.playerListOptions.enableListDisplay && isAfk) {
-            Formatting color = Formatting.byName(CONFIG.playerListOptions.afkColor);
-            if (color == null)
-                color = Formatting.RESET;
-
             Text listEntry = Placeholders.parseText(
-                    Text.of(CONFIG.playerListOptions.afkPlayerName),
+                    TextParserUtils.formatText(CONFIG.playerListOptions.afkPlayerName),
                     PlaceholderContext.of(this));
-            cir.setReturnValue(listEntry.copy().formatted(color));
+            cir.setReturnValue(listEntry.copy());
         }
-
     }
 }

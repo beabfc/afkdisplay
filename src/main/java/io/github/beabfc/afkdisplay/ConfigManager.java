@@ -10,19 +10,18 @@ public class ConfigManager {
 
     public static void initConfig() {
         CONFIG.afkDisplayOptions.afkDisplayCommandPermissions = "3";
-        CONFIG.afkDisplayOptions.afkDisplayPlaceholder = "<i><gray>[AFK] %player:displayname%</i></gray>";
-        CONFIG.afkDisplayOptions.afkPlaceholder = "[AFK]";
+        CONFIG.afkDisplayOptions.afkDisplayPlaceholder = "%player:displayname%";
+        CONFIG.afkDisplayOptions.afkDisplayPlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>";
+        CONFIG.afkDisplayOptions.afkPlaceholder = "<i><gray>[AFK]<r>";
         CONFIG.afkDisplayOptions.enableAfkCommand = true;
         CONFIG.packetOptions.resetOnLook = false;
         CONFIG.packetOptions.resetOnMovement = false;
         CONFIG.packetOptions.timeoutSeconds = 180;
-        CONFIG.playerListOptions.afkColor = "gray";
-        CONFIG.playerListOptions.afkPlayerName = "[AFK] %player:displayname%";
+        CONFIG.playerListOptions.afkPlayerName = "<i><gray>[AFK] %player:displayname%<r>";
         CONFIG.playerListOptions.enableListDisplay = true;
         CONFIG.messageOptions.enableChatMessages = true;
-        CONFIG.messageOptions.messageColor = "yellow";
-        CONFIG.messageOptions.wentAfk = "%player:displayname% is now AFK";
-        CONFIG.messageOptions.returned = "%player:displayname% is no longer AFK";
+        CONFIG.messageOptions.wentAfk = "%player:displayname% <yellow>is now AFK<r>";
+        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK<r>";
     }
 
     public static void loadConfig() {

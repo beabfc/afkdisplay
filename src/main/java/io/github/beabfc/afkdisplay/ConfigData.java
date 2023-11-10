@@ -10,6 +10,7 @@ public class ConfigData {
         public boolean enableAfkCommand;
         public String afkDisplayCommandPermissions;
         public String afkPlaceholder;
+        public String afkDisplayPlaceholderAfk;
         public String afkDisplayPlaceholder;
     }
 
@@ -21,13 +22,11 @@ public class ConfigData {
 
     public static class PlayerListOptions {
         public boolean enableListDisplay;
-        public String afkColor;
         public String afkPlayerName;
     }
 
     public static class MessageOptions {
         public boolean enableChatMessages;
-        public String messageColor;
         public String wentAfk;
         public String returned;
     }
