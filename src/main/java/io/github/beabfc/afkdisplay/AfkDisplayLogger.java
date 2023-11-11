@@ -12,27 +12,27 @@ public class AfkDisplayLogger {
     public static void initLogger(String ModID) {
         LOGGER = LogManager.getLogger(ModID);
         log = true;
-        LOGGER.info("{}-{}", MOD_NAME, MOD_VERSION);
-        LOGGER.info("Author: {}", MOD_AUTHO_STRING);
+        LOGGER.info("[{}] {}-{}", MOD_ID, MOD_NAME, MOD_VERSION);
+        LOGGER.info("[{}] Author: {}", MOD_ID, MOD_AUTHO_STRING);
     }
 
     public static void info(String msg) {
         if (log)
-            LOGGER.info("{} " + msg, MOD_ID);
+            LOGGER.info("[{}] " + msg, MOD_ID);
     }
 
     public static void warn(String msg) {
         if (log)
-            LOGGER.warn("{} " + msg, MOD_ID);
+            LOGGER.warn("[{}] " + msg, MOD_ID);
     }
 
     public static void error(String msg) {
         if (log)
-            LOGGER.error("{} " + msg, MOD_ID);
+            LOGGER.error("[{}] " + msg, MOD_ID);
     }
 
     public static void fatal(String msg) {
         if (log)
-            LOGGER.fatal("{} " + msg, MOD_ID);
+            LOGGER.fatal("[{}] " + msg, MOD_ID);
     }
 }

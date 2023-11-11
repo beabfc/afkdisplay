@@ -28,7 +28,7 @@ public class ConfigManager {
     }
 
     public static void loadConfig() {
-        File conf = FabricLoader.getInstance().getConfigDir().resolve(MOD_ID).toFile();
+        File conf = FabricLoader.getInstance().getConfigDir().resolve(MOD_ID + ".toml").toFile();
         try {
             if (conf.exists()) {
                 CONFIG = new Toml().read(conf).to(ConfigData.class);
