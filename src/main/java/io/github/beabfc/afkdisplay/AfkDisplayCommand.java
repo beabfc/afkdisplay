@@ -1,16 +1,16 @@
 package io.github.beabfc.afkdisplay;
 
+import static net.minecraft.server.command.CommandManager.*;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
 import net.minecraft.text.Text;
 
 public class AfkDisplayCommand {
-
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 literal("afkdisplay")
@@ -24,12 +24,14 @@ public class AfkDisplayCommand {
                                 // .requires(src ->
                                 // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
-                                        .executes(ctx -> setAfk(EntityArgumentType.getPlayer(ctx, "player")))))
+                                        .executes(ctx -> setAfk(ctx.getSource(),
+                                                EntityArgumentType.getPlayer(ctx, "player")))))
                         .then(literal("clear")
                                 // .requires(src ->
                                 // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
-                                        .executes(ctx -> clearAfk(EntityArgumentType.getPlayer(ctx, "player"))))));
+                                        .executes(ctx -> clearAfk(ctx.getSource(),
+                                                EntityArgumentType.getPlayer(ctx, "player"))))));
 
     }
 
@@ -45,21 +47,22 @@ public class AfkDisplayCommand {
         return 1;
     }
 
-    private static int setAfk(ServerPlayerEntity player) {
+    private static int setAfk(ServerCommandSource src, ServerPlayerEntity player) {
         AfkPlayer afkPlayer = (AfkPlayer) player;
-
-        if (afkPlayer.isAfk()) {
-            afkPlayer.disableAfk();
-        } else {
-            afkPlayer.enableAfk();
-        }
+        String user = src.getDisplayName().toString();
+        String target = player.getEntityName();
+        
+        afkPlayer.enableAfk();
+        AfkDisplayLogger.info(user + " set player " + target + " as AFK");
         return 1;
     }
 
-    private static int clearAfk(ServerPlayerEntity player) {
+    private static int clearAfk(ServerCommandSource src, ServerPlayerEntity player) {
         AfkPlayer afkPlayer = (AfkPlayer) player;
-
+        String user = src.getDisplayName().toString();
+        String target = player.getEntityName();
         afkPlayer.disableAfk();
+        AfkDisplayLogger.info(user + " cleared player " + target + " from AFK");
         return 1;
     }
 }
