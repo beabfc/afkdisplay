@@ -5,6 +5,7 @@ import static net.minecraft.server.command.CommandManager.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.command.ServerCommandSource;
@@ -14,29 +15,25 @@ import net.minecraft.text.Text;
 public class AfkDisplayCommand {
         public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
                 dispatcher.register(literal("afkdisplay")
-                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                .requires(Permissions.require("afkdisplay.about", 3))
                                 .executes(ctx -> afkAbout(ctx.getSource(), ctx))
                                 .then(literal("reload")
-                                                // .requires(src ->
-                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .requires(Permissions.require("afkdisplay.reload", 3))
                                                 .executes(ctx -> afkReload(ctx.getSource(), ctx)))
                                 .then(literal("set")
-                                                // .requires(src ->
-                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .requires(Permissions.require("afkdisplay.set", 3))
                                                 .then(argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> setAfk(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player")))))
                                 .then(literal("clear")
-                                                // .requires(src ->
-                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .requires(Permissions.require("afkdisplay.clear", 3))
                                                 .then(argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> clearAfk(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player")))))
                                 .then(literal("update")
-                                                // .requires(src ->
-                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .requires(Permissions.require("afkdisplay.update", 3))
                                                 .then(argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> updatePlayer(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
