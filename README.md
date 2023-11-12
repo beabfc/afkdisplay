@@ -6,7 +6,7 @@
 - Added '**/afkdisplay clear [Player]**' command.  This allows any administrator to clear the AFK status of a player.
 - Added '**/afkdisplay update [Player]**' command.  This allows any administrator to force a player list update for a player.
 - ***[REWRITE]***: Complete rewrite of the Config File manager to allow the '**/afkdisplay reload**' command to work.
-- **FIXME**: Added a security permissions configuration for the **'/afkdisplay**' command (FOR future LP permissions support).
+- **[PERMISSIONS]**: Added a security permissions for the **'/afkdisplay**' command via [Luck Permissions](https://luckperms.net/) with the AfkDisplayCommandPermissions setting the default restrictions.
 - Added a placeholder **%player:afkdisplayname%** so that you can use this as a replacement for the **%player:displayname%** placeholder under other Mods, such as [Styled Playerlist](https://modrinth.com/mod/styledplayerlist "Styled Playerlist").
 ***NOTE that this method was designed to be fully compliant with LuckPerms Prefixes under Styled Playerlist, because the standard method for playerlist updating fails, or you can simply use %player:afk% to format names if you like.***
 
@@ -24,8 +24,8 @@ The configuration is located in `afkdisplay.toml` inside your servers config fol
 [AfkDisplayOptions]
 # Allows you to disable the /afk command to mark yourself or other players (only for operators) as AFK 
 enableAfkCommand = true
-# [ENHANCEMENT] FIXME: Trying to add a config for the /afkdisplay command permissions, I will plan to add LP support.
-afkDisplayCommandPermissions = "3"
+# [ENHANCEMENT] config for the /afkdisplay default command permissions, configurable with Luck Perms (afkdisplay) node
+afkDisplayCommandPermissions = 3
 # This will be the value of the placeholder %player:afk% if a player is AFK, [ENHANCEMENT] option now accepts formatting nodes
 afkPlaceholder = "<i><gray>[AFK]<r>"
 # [ENHANCEMENT] a new placeholder %player:afkdisplayname% for backporting the entire %displayname% for use in other Mods, such as Styled Playerlist

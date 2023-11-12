@@ -1,18 +1,19 @@
 package io.github.beabfc.afkdisplay;
 
-import com.moandjiezana.toml.Toml;
-import com.moandjiezana.toml.TomlWriter;
-import net.fabricmc.loader.api.FabricLoader;
-
-import static io.github.beabfc.afkdisplay.AfkDisplay.MOD_ID;
+import static io.github.beabfc.afkdisplay.AfkDisplay.*;
 
 import java.io.File;
+
+import com.moandjiezana.toml.Toml;
+import com.moandjiezana.toml.TomlWriter;
+
+import net.fabricmc.loader.api.FabricLoader;
 
 public class ConfigManager {
     public static ConfigData CONFIG = new ConfigData();
 
     public static void initConfig() {
-        CONFIG.afkDisplayOptions.afkDisplayCommandPermissions = "3";
+        CONFIG.afkDisplayOptions.afkDisplayCommandPermissions = 3;
         CONFIG.afkDisplayOptions.afkDisplayPlaceholder = "%player:displayname%";
         CONFIG.afkDisplayOptions.afkDisplayPlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>";
         CONFIG.afkDisplayOptions.afkPlaceholder = "<i><gray>[AFK]<r>";
