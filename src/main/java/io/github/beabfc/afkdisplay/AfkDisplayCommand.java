@@ -6,6 +6,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -31,6 +32,12 @@ public class AfkDisplayCommand {
                                 // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
                                 .then(argument("player", EntityArgumentType.player())
                                         .executes(ctx -> clearAfk(ctx.getSource(),
+                                                EntityArgumentType.getPlayer(ctx, "player")))))
+                        .then(literal("fix")
+                                // .requires(src ->
+                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                .then(argument("player", EntityArgumentType.player())
+                                        .executes(ctx -> fixPlayer(ctx.getSource(),
                                                 EntityArgumentType.getPlayer(ctx, "player"))))));
 
     }
@@ -51,7 +58,7 @@ public class AfkDisplayCommand {
         AfkPlayer afkPlayer = (AfkPlayer) player;
         String user = src.getDisplayName().toString();
         String target = player.getEntityName();
-        
+
         afkPlayer.enableAfk();
         AfkDisplayLogger.info(user + " set player " + target + " as AFK");
         return 1;
@@ -63,6 +70,16 @@ public class AfkDisplayCommand {
         String target = player.getEntityName();
         afkPlayer.disableAfk();
         AfkDisplayLogger.info(user + " cleared player " + target + " from AFK");
+        return 1;
+    }
+
+    private static int fixPlayer(ServerCommandSource src, ServerPlayerEntity player) {
+        String user = src.getDisplayName().toString();
+        String target = player.getEntityName();
+        src.getServer()
+                .getPlayerManager()
+                .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
+        AfkDisplayLogger.info(user + " fixed player list entry for " + target + "");
         return 1;
     }
 }
