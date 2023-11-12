@@ -30,10 +30,8 @@ dependencies {
 
 	// fabric api
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
 	// placeholder api
-	modImplementation(include("eu.pb4:placeholder-api:${project.placeholder_api_version}"))
-
+	modImplementation include("eu.pb4:placeholder-api:${project.placeholder_api_version}")
 	// LuckPerms API
 	modImplementation include("me.lucko:fabric-permissions-api:${project.luckperms_api_version}")
 	// toml4j for config
