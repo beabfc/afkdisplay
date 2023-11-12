@@ -13,47 +13,43 @@ import net.minecraft.text.Text;
 
 public class AfkDisplayCommand {
         public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-                dispatcher.register(
-                                literal("afkdisplay")
-                                                .requires(src -> src.hasPermissionLevel(
-                                                                src.getServer().getOpPermissionLevel()))
-                                                .executes(AfkDisplayCommand::about)
-                                                .then(literal("reload")
-                                                                // .requires(src ->
-                                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
-                                                                .executes(AfkDisplayCommand::reload))
-                                                .then(literal("set")
-                                                                // .requires(src ->
-                                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
-                                                                .then(argument("player", EntityArgumentType.player())
-                                                                                .executes(ctx -> setAfk(ctx.getSource(),
-                                                                                                EntityArgumentType
-                                                                                                                .getPlayer(ctx, "player")))))
-                                                .then(literal("clear")
-                                                                // .requires(src ->
-                                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
-                                                                .then(argument("player", EntityArgumentType.player())
-                                                                                .executes(ctx -> clearAfk(
-                                                                                                ctx.getSource(),
-                                                                                                EntityArgumentType
-                                                                                                                .getPlayer(ctx, "player")))))
-                                                .then(literal("fix")
-                                                                // .requires(src ->
-                                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
-                                                                .then(argument("player", EntityArgumentType.player())
-                                                                                .executes(ctx -> fixPlayer(
-                                                                                                ctx.getSource(),
-                                                                                                EntityArgumentType
-                                                                                                                .getPlayer(ctx, "player"))))));
+                dispatcher.register(literal("afkdisplay")
+                                .requires(src -> src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                .executes(ctx -> afkAbout(ctx.getSource(), ctx))
+                                .then(literal("reload")
+                                                // .requires(src ->
+                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .executes(ctx -> afkReload(ctx.getSource(), ctx)))
+                                .then(literal("set")
+                                                // .requires(src ->
+                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .then(argument("player", EntityArgumentType.player())
+                                                                .executes(ctx -> setAfk(ctx.getSource(),
+                                                                                EntityArgumentType.getPlayer(ctx,
+                                                                                                "player")))))
+                                .then(literal("clear")
+                                                // .requires(src ->
+                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .then(argument("player", EntityArgumentType.player())
+                                                                .executes(ctx -> clearAfk(ctx.getSource(),
+                                                                                EntityArgumentType.getPlayer(ctx,
+                                                                                                "player")))))
+                                .then(literal("update")
+                                                // .requires(src ->
+                                                // src.hasPermissionLevel(src.getServer().getOpPermissionLevel()))
+                                                .then(argument("player", EntityArgumentType.player())
+                                                                .executes(ctx -> updatePlayer(ctx.getSource(),
+                                                                                EntityArgumentType.getPlayer(ctx,
+                                                                                                "player"))))));
         }
 
-        private static int about(CommandContext<ServerCommandSource> context) {
+        private static int afkAbout(ServerCommandSource src, CommandContext<ServerCommandSource> context) {
                 Text ModInfo = AfkDisplayInfo.getModInfo();
                 context.getSource().sendFeedback(() -> ModInfo, false);
                 return 1;
         }
 
-        private static int reload(CommandContext<ServerCommandSource> context) {
+        private static int afkReload(ServerCommandSource src, CommandContext<ServerCommandSource> context) {
                 ConfigManager.reloadConfig();
                 context.getSource().sendFeedback(() -> Text.literal("Reloaded config!"), false);
                 return 1;
@@ -78,14 +74,14 @@ public class AfkDisplayCommand {
                 return 1;
         }
 
-        private static int fixPlayer(ServerCommandSource src, ServerPlayerEntity player) {
+        private static int updatePlayer(ServerCommandSource src, ServerPlayerEntity player) {
                 String user = src.getDisplayName().toString();
                 String target = player.getEntityName();
                 src.getServer()
                                 .getPlayerManager()
                                 .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME,
                                                 player));
-                AfkDisplayLogger.info(user + " fixed player list entry for " + target + "");
+                AfkDisplayLogger.info(user + " updated player list entry for " + target + "");
                 return 1;
         }
 }
