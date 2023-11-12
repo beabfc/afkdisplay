@@ -18,6 +18,7 @@ public class ConfigManager {
         CONFIG.afkDisplayOptions.afkDisplayPlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>";
         CONFIG.afkDisplayOptions.afkPlaceholder = "<i><gray>[AFK]<r>";
         CONFIG.afkDisplayOptions.enableAfkCommand = true;
+        CONFIG.afkDisplayOptions.afkCommandPermissions = 0;
         CONFIG.packetOptions.resetOnLook = false;
         CONFIG.packetOptions.resetOnMovement = false;
         CONFIG.packetOptions.timeoutSeconds = 180;

@@ -8,6 +8,7 @@ public class ConfigData {
 
     public static class AfkDisplayOptions {
         public boolean enableAfkCommand;
+        public int afkCommandPermissions;
         public int afkDisplayCommandPermissions;
         public String afkPlaceholder;
         public String afkDisplayPlaceholderAfk;
