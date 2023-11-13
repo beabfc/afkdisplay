@@ -26,7 +26,7 @@ public class ConfigManager {
         CONFIG.playerListOptions.enableListDisplay = true;
         CONFIG.messageOptions.enableChatMessages = true;
         CONFIG.messageOptions.wentAfk = "%player:displayname% <yellow>is now AFK<r>";
-        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK<r>";
+        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK (Gone for %player:afkduration%)<r>";
     }
 
     public static void loadConfig() {
