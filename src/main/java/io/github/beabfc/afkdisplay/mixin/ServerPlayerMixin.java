@@ -43,10 +43,19 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         return this.isAfk;
     }
 
+    public long afkTimeMs() {
+        return this.afkTimeMs;
+    }
+
+    public String afkTimeString() {
+        return this.afkTimeString;
+    }
+
     public void enableAfk() {
         if (isAfk())
             return;
         setAfk(true);
+        setAfkTime();
         sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
                 PlaceholderContext.of(this)));
     }
@@ -57,6 +66,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         setAfk(false);
         sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.returned),
                 PlaceholderContext.of(this)));
+        clearAfkTime();
     }
 
     private void sendAfkMessage(Text text) {
@@ -73,12 +83,16 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         this.server
                 .getPlayerManager()
                 .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
-        setAfkTime();
     }
 
     private void setAfkTime() {
         this.afkTimeMs = Util.getMeasuringTimeMs();
         this.afkTimeString = Util.getFormattedCurrentTime();
+    }
+
+    private void clearAfkTime() {
+        this.afkTimeMs = 0;
+        this.afkTimeString = "";
     }
 
     @Inject(method = "updateLastActionTime", at = @At("TAIL"))
