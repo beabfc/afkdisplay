@@ -61,7 +61,8 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
             return;
         setAfk(true);
         setAfkTime();
-        if (reason == "") {
+        if (reason == "" && CONFIG.messageOptions.defaultReason == "") {
+            clearAfkReason();
             sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
                     PlaceholderContext.of(this)));
         } else {

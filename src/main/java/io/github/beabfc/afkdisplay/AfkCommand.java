@@ -21,7 +21,9 @@ public class AfkCommand {
 
     private static int setAfk(ServerCommandSource src, String reason) throws CommandSyntaxException {
         AfkPlayer player = (AfkPlayer) src.getPlayerOrThrow();
-        if (reason == "") {
+        if (reason == "" && CONFIG.messageOptions.defaultReason == "") {
+            player.enableAfk("");
+        } else if (reason == "") {
             player.enableAfk(CONFIG.messageOptions.defaultReason);
         } else {
             player.enableAfk(reason);

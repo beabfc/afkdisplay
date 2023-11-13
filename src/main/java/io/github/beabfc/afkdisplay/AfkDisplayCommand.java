@@ -75,14 +75,16 @@ public class AfkDisplayCommand {
                 AfkPlayer afkPlayer = (AfkPlayer) player;
                 String user = src.getDisplayName().toString();
                 String target = player.getEntityName();
-                if (reason == "") {
+                if (reason == "" && CONFIG.messageOptions.defaultReason == "") {
+                        afkPlayer.enableAfk("");
+                        AfkDisplayLogger.info(user + " set player " + target + " as AFK");
+                } else if (reason == "") {
                         afkPlayer.enableAfk(CONFIG.messageOptions.defaultReason);
                         AfkDisplayLogger.info(user + " set player " + target + " as AFK for reason: "
                                         + CONFIG.messageOptions.defaultReason);
                 } else {
                         afkPlayer.enableAfk(reason);
                         AfkDisplayLogger.info(user + " set player " + target + " as AFK for reason: " + reason);
-
                 }
                 return 1;
         }

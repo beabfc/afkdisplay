@@ -31,7 +31,7 @@ public class AfkDisplayInfo {
             if (afkPlayer.afkReason() == "") {
                 AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
                         + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                        + "<r>\nReason: <none>"
+                        + "<r>\nReason: none"
                         + "<r>.";
             } else {
                 AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
