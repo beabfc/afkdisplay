@@ -20,7 +20,7 @@ public class AfkDisplayInfo {
         String modInfo1 = MOD_ID + "-" + MOD_VERSION;
         String modInfo2 = "Author: <light_purple>" + MOD_AUTHO_STRING + "</light_purple>";
         String modInfo3 = "URL: <blue>" + MOD_URL_RESOURCE + "</blue>";
-        // I tried using <url:[value]> but it wasnt working ...
+        // I tried using <url:[value]> and combining these... but it wasnt working ...
 
         Text info = TextParserUtils.formatText(modInfo1 + "\n" + modInfo2 + "\n" + modInfo3);
         return info;
@@ -32,18 +32,20 @@ public class AfkDisplayInfo {
         long duration;
         if (afkPlayer.isAfk()) {
             duration = Util.getMeasuringTimeMs() - afkPlayer.afkTimeMs();
-            // AfkDisplayLogger.info("[DB] getAfkInfoString() duration (diff MS): " +
-            // duration + " .");
             if (afkPlayer.afkReason() == "") {
                 AfkStatus = "<bold>AFK Information:"
-                        + "<r>\nPlayer: " + target + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString()
-                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration) + "ms"
+                        + "<r>\nPlayer: " + target
+                        + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
+                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                        + "ms (Format:HH:mm:ss)"
                         + "<r>\nReason: none"
                         + "<r>";
             } else {
                 AfkStatus = "<bold>AFK Information:"
-                        + "<r>\nPlayer: " + target + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString()
-                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration) + "ms"
+                        + "<r>\nPlayer: " + target
+                        + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
+                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                        + "ms (Format:HH:mm:ss)"
                         + "<r>\nReason: " + afkPlayer.afkReason()
                         + "<r>";
             }
