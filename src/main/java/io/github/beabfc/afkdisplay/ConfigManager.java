@@ -29,6 +29,7 @@ public class ConfigManager {
         CONFIG.messageOptions.enableChatMessages = true;
         CONFIG.messageOptions.wentAfk = "%player:displayname% <yellow>is now AFK<r>";
         CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK (Gone for %player:afkduration%)<r>";
+        CONFIG.messageOptions.defaultReason = "";
     }
 
     public static void loadConfig() {

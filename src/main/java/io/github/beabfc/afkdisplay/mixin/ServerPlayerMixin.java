@@ -34,6 +34,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     private boolean isAfk;
     private long afkTimeMs;
     private String afkTimeString;
+    private String afkReason;
 
     public ServerPlayerMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -51,13 +52,24 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         return this.afkTimeString;
     }
 
-    public void enableAfk() {
+    public String afkReason() {
+        return this.afkReason;
+    }
+
+    public void enableAfk(String reason) {
         if (isAfk())
             return;
         setAfk(true);
         setAfkTime();
-        sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
-                PlaceholderContext.of(this)));
+        if (reason == "") {
+            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
+                    PlaceholderContext.of(this)));
+        } else {
+            setAfkReason(reason);
+            sendAfkMessage(
+                    Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk + ", " + reason),
+                            PlaceholderContext.of(this)));
+        }
     }
 
     public void disableAfk() {
@@ -67,6 +79,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.returned),
                 PlaceholderContext.of(this)));
         clearAfkTime();
+        clearAfkReason();
     }
 
     private void sendAfkMessage(Text text) {
@@ -93,6 +106,14 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     private void clearAfkTime() {
         this.afkTimeMs = 0;
         this.afkTimeString = "";
+    }
+
+    private void setAfkReason(String reason) {
+        this.afkReason = reason;
+    }
+
+    private void clearAfkReason() {
+        this.afkReason = "";
     }
 
     @Inject(method = "updateLastActionTime", at = @At("TAIL"))

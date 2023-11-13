@@ -32,5 +32,6 @@ public class ConfigData {
         public boolean enableChatMessages;
         public String wentAfk;
         public String returned;
+        public String defaultReason;
     }
 }

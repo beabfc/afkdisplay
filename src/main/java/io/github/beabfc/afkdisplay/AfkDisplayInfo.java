@@ -28,9 +28,17 @@ public class AfkDisplayInfo {
         long duration;
         if (afkPlayer.isAfk()) {
             duration = Util.getMeasuringTimeMs() - afkPlayer.afkTimeMs();
-            AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
-                    + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                    + "<r>.";
+            if (afkPlayer.afkReason() == "") {
+                AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
+                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                        + "<r>\nReason: <none>"
+                        + "<r>.";
+            } else {
+                AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
+                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                        + "<r>\nReason: " + afkPlayer.afkReason()
+                        + "<r>.";
+            }
             AfkDisplayLogger.info(user + " displayed " + target + "'s AFK time/duration.");
         } else {
             AfkStatus = "Player: " + target + " is not marked as AFK.";

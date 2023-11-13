@@ -70,4 +70,17 @@ public final class AfkDisplayPlaceholders {
         });
     };
 
+    static void registerAfkReason() {
+        Placeholders.register(new Identifier("player", "afkreason"), (ctx, arg) -> {
+            if (!ctx.hasPlayer()) {
+                return PlaceholderResult.invalid("No player!");
+            }
+            AfkPlayer player = (AfkPlayer) ctx.player();
+            assert player != null;
+            Text result = player.isAfk() ? TextParserUtils.formatText(player.afkReason())
+                    : TextParserUtils.formatText("");
+            return PlaceholderResult.value(result);
+        });
+    };
+
 }

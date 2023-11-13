@@ -2,55 +2,58 @@ package io.github.beabfc.afkdisplay;
 
 import static io.github.beabfc.afkdisplay.AfkDisplayInfo.*;
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
-import static net.minecraft.server.command.CommandManager.*;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 
 import eu.pb4.placeholders.api.TextParserUtils;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 public class AfkDisplayCommand {
         public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-                dispatcher.register(literal("afkdisplay")
+                dispatcher.register(CommandManager.literal("afkdisplay")
                                 .requires(Permissions.require("afkdisplay.afkdisplay",
                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                 .executes(ctx -> afkAbout(ctx.getSource(), ctx))
-                                .then(literal("reload")
+                                .then(CommandManager.literal("reload")
                                                 .requires(Permissions.require("afkdisplay.afkdisplay.reload",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                                 .executes(ctx -> afkReload(ctx.getSource(), ctx)))
-                                .then(literal("set")
+                                .then(CommandManager.literal("set")
                                                 .requires(Permissions.require("afkdisplay.afkdisplay.set",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
-                                                .then(argument("player", EntityArgumentType.player())
-                                                                .executes(ctx -> setAfk(ctx.getSource(),
-                                                                                EntityArgumentType.getPlayer(ctx,
-                                                                                                "player")))))
-                                .then(literal("clear")
+                                                .then(CommandManager.argument("player", EntityArgumentType.player()))
+                                                .then(CommandManager.argument("reason",
+                                                                StringArgumentType.greedyString()))
+                                                .executes((ctx) -> setAfk(ctx.getSource(),
+                                                                EntityArgumentType.getPlayer(ctx, "player"),
+                                                                StringArgumentType.getString(ctx, "reason"))))
+                                .then(CommandManager.literal("clear")
                                                 .requires(Permissions.require("afkdisplay.afkdisplay.clear",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
-                                                .then(argument("player", EntityArgumentType.player())
+                                                .then(CommandManager.argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> clearAfk(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player")))))
-                                .then(literal("info")
+                                .then(CommandManager.literal("info")
                                                 .requires(Permissions.require("afkdisplay.afkdisplay.info",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
-                                                .then(argument("player", EntityArgumentType.player())
+                                                .then(CommandManager.argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> infoAfkPlayer(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player"),
                                                                                 ctx))))
-                                .then(literal("update")
+                                .then(CommandManager.literal("update")
                                                 .requires(Permissions.require("afkdisplay.afkdisplay.update",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
-                                                .then(argument("player", EntityArgumentType.player())
+                                                .then(CommandManager.argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> updatePlayer(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player"))))));
@@ -68,12 +71,19 @@ public class AfkDisplayCommand {
                 return 1;
         }
 
-        private static int setAfk(ServerCommandSource src, ServerPlayerEntity player) {
+        private static int setAfk(ServerCommandSource src, ServerPlayerEntity player, String reason) {
                 AfkPlayer afkPlayer = (AfkPlayer) player;
                 String user = src.getDisplayName().toString();
                 String target = player.getEntityName();
-                afkPlayer.enableAfk();
-                AfkDisplayLogger.info(user + " set player " + target + " as AFK");
+                if (reason == "") {
+                        afkPlayer.enableAfk(CONFIG.messageOptions.defaultReason);
+                        AfkDisplayLogger.info(user + " set player " + target + " as AFK for reason: "
+                                        + CONFIG.messageOptions.defaultReason);
+                } else {
+                        afkPlayer.enableAfk(reason);
+                        AfkDisplayLogger.info(user + " set player " + target + " as AFK for reason: " + reason);
+
+                }
                 return 1;
         }
 
