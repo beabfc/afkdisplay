@@ -6,7 +6,8 @@
   "name": "AfkDisplay",
   "description": "Show which players are afk in the player list",
   "authors": [
-    "beabfc"
+    "beabfc",
+    "sakura-ryoko (fork)"
   ],
   "contact": {
     "homepage": "",
