@@ -7,4 +7,7 @@ public interface AfkPlayer {
 
     void disableAfk();
 
+    long afkTimeMs();
+
+    String afkTimeString();
 }

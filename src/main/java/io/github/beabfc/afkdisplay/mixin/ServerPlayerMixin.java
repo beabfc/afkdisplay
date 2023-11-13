@@ -1,17 +1,7 @@
 package io.github.beabfc.afkdisplay.mixin;
 
-import eu.pb4.placeholders.api.PlaceholderContext;
-import eu.pb4.placeholders.api.Placeholders;
-import eu.pb4.placeholders.api.TextParserUtils;
-import io.github.beabfc.afkdisplay.AfkPlayer;
-import static io.github.beabfc.afkdisplay.ConfigManager.CONFIG;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.world.World;
+import static io.github.beabfc.afkdisplay.ConfigManager.*;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,6 +11,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import eu.pb4.placeholders.api.PlaceholderContext;
+import eu.pb4.placeholders.api.Placeholders;
+import eu.pb4.placeholders.api.TextParserUtils;
+import io.github.beabfc.afkdisplay.AfkPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Util;
+import net.minecraft.world.World;
+
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     @Shadow
@@ -29,6 +32,8 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     public ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
     @Unique
     private boolean isAfk;
+    private long afkTimeMs;
+    private String afkTimeString;
 
     public ServerPlayerMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -68,6 +73,12 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
         this.server
                 .getPlayerManager()
                 .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
+        setAfkTime();
+    }
+
+    private void setAfkTime() {
+        this.afkTimeMs = Util.getMeasuringTimeMs();
+        this.afkTimeString = Util.getFormattedCurrentTime();
     }
 
     @Inject(method = "updateLastActionTime", at = @At("TAIL"))
