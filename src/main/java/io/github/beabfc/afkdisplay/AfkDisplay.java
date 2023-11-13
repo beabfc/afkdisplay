@@ -9,11 +9,12 @@ public class AfkDisplay implements DedicatedServerModInitializer {
     public static String MOD_VERSION;
     public static final String MOD_ID = "afkdisplay";
     public static final String MOD_NAME = "AfkDisplay";
-    public static final String MOD_AUTHO_STRING = "beabfc, (fork by sakura-ryoko)";
+    public static final String MOD_AUTHO_STRING = "beabfc, (forked by) sakura-ryoko";
+    public static final String MOD_URL_RESOURCE = "https://github.com/beabfc/afkdisplay";
 
     @Override
     public void onInitializeServer() {
-        AfkDisplayInfo.getVersion();
+        AfkDisplayInfo.getVersionInfo();
         AfkDisplayLogger.initLogger(MOD_ID);
         ConfigManager.initConfig();
         ConfigManager.loadConfig();

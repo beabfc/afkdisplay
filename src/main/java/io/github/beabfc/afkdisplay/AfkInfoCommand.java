@@ -29,7 +29,7 @@ public class AfkInfoCommand {
         private static int infoAfkPlayer(ServerCommandSource src, ServerPlayerEntity player,
                         CommandContext<ServerCommandSource> context) {
                 AfkPlayer afkPlayer = (AfkPlayer) player;
-                String user = src.getDisplayName().toString();
+                String user = src.getName();
                 String target = player.getEntityName();
                 String AfkStatus = getAfkInfoString(afkPlayer, user, target);
                 context.getSource().sendFeedback(() -> TextParserUtils.formatText(AfkStatus), false);

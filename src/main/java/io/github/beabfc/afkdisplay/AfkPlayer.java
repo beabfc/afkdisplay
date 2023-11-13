@@ -4,6 +4,7 @@ public interface AfkPlayer {
     boolean isAfk();
 
     void enableAfk(String reason);
+    // void enableAfk();
 
     void disableAfk();
 

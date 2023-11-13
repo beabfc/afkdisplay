@@ -59,26 +59,29 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     public void enableAfk(String reason) {
         if (isAfk())
             return;
-        setAfk(true);
         setAfkTime();
-        if (reason == "" && CONFIG.messageOptions.defaultReason == "") {
-            clearAfkReason();
+        if (reason == null && CONFIG.messageOptions.defaultReason == null) {
+            setAfkReason("none");
+        } else if (reason == null || reason == "") {
+            setAfkReason("none");
             sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
                     PlaceholderContext.of(this)));
         } else {
             setAfkReason(reason);
             sendAfkMessage(
-                    Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk + ", " + reason),
+                    Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk
+                            + ", " + reason),
                             PlaceholderContext.of(this)));
         }
+        setAfk(true);
     }
 
     public void disableAfk() {
         if (!isAfk)
             return;
-        setAfk(false);
         sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.returned),
                 PlaceholderContext.of(this)));
+        setAfk(false);
         clearAfkTime();
         clearAfkReason();
     }
@@ -110,7 +113,11 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     }
 
     private void setAfkReason(String reason) {
-        this.afkReason = reason;
+        if (reason == null || reason == "") {
+            this.afkReason = "none";
+        } else {
+            this.afkReason = reason;
+        }
     }
 
     private void clearAfkReason() {

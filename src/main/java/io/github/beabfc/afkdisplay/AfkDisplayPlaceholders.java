@@ -43,7 +43,7 @@ public final class AfkDisplayPlaceholders {
     };
 
     static void registerAfkDuration() {
-        long now = Util.getMeasuringTimeMs();
+        // long now = Util.getMeasuringTimeMs();
         Placeholders.register(new Identifier("player", "afkduration"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
@@ -51,7 +51,8 @@ public final class AfkDisplayPlaceholders {
             AfkPlayer player = (AfkPlayer) ctx.player();
             assert player != null;
             Text result = player.isAfk()
-                    ? TextParserUtils.formatText(DurationFormatUtils.formatDurationHMS(now - player.afkTimeMs()))
+                    ? TextParserUtils.formatText(DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
+                            player.afkTimeMs()))
                     : TextParserUtils.formatText("");
             return PlaceholderResult.value(result);
         });

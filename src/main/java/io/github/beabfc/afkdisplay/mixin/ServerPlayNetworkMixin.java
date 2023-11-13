@@ -27,7 +27,8 @@ public abstract class ServerPlayNetworkMixin {
             return;
         long afkDuration = Util.getMeasuringTimeMs() - this.player.getLastActionTime();
         if (afkDuration > timeoutSeconds * 1000L) {
-            afkPlayer.enableAfk(CONFIG.messageOptions.defaultReason);
+            // afkPlayer.enableAfk(CONFIG.messageOptions.defaultReason);
+            afkPlayer.enableAfk("timeout");
         }
     }
 

@@ -11,16 +11,20 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 
 public class AfkDisplayInfo {
-    public static void getVersion() {
+    public static void getVersionInfo() {
         final ModContainer CONTAINER = FabricLoader.getInstance().getModContainer(MOD_ID).get();
         MOD_VERSION = CONTAINER.getMetadata().getVersion().getFriendlyString();
     }
 
     public static Text getModInfo() {
-        String ModInfo1 = MOD_ID + "-" + MOD_VERSION;
-        String ModInfo2 = "Author: <green>" + MOD_AUTHO_STRING + "<r>";
-        Text info = TextParserUtils.formatText(ModInfo1 + "\n" + ModInfo2);
+        String modInfo1 = MOD_ID + "-" + MOD_VERSION;
+        String modInfo2 = "Author: <light_purple>" + MOD_AUTHO_STRING + "</light_purple>";
+        String modInfo3 = "URL: <blue>" + MOD_URL_RESOURCE + "</blue>";
+        // I tried using <url:[value]> but it wasnt working ...
+
+        Text info = TextParserUtils.formatText(modInfo1 + "\n" + modInfo2 + "\n" + modInfo3);
         return info;
+
     }
 
     public static String getAfkInfoString(AfkPlayer afkPlayer, String user, String target) {
@@ -28,22 +32,26 @@ public class AfkDisplayInfo {
         long duration;
         if (afkPlayer.isAfk()) {
             duration = Util.getMeasuringTimeMs() - afkPlayer.afkTimeMs();
+            // AfkDisplayLogger.info("[DB] getAfkInfoString() duration (diff MS): " +
+            // duration + " .");
             if (afkPlayer.afkReason() == "") {
-                AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
-                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                AfkStatus = "<bold>AFK Information:"
+                        + "<r>\nPlayer: " + target + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString()
+                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration) + "ms"
                         + "<r>\nReason: none"
-                        + "<r>.";
+                        + "<r>";
             } else {
-                AfkStatus = "Player: " + target + "AFK Information--\nAfk Since: <green>" + afkPlayer.afkTimeString()
-                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                AfkStatus = "<bold>AFK Information:"
+                        + "<r>\nPlayer: " + target + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString()
+                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration) + "ms"
                         + "<r>\nReason: " + afkPlayer.afkReason()
-                        + "<r>.";
+                        + "<r>";
             }
-            AfkDisplayLogger.info(user + " displayed " + target + "'s AFK time/duration.");
+            AfkDisplayLogger.info(user + " displayed " + target + "'s AFK info.");
         } else {
-            AfkStatus = "Player: " + target + " is not marked as AFK.";
+            AfkStatus = "Player: " + target + "<r>\n ... is not marked as AFK.";
             AfkDisplayLogger.info(user + " attempted to display " + target
-                    + "'s AFK time/duration, but they aren't AFK.");
+                    + "'s AFK time/duration, but they wern't AFK.");
         }
         return AfkStatus;
     }

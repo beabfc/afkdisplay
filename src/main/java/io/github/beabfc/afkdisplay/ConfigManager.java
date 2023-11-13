@@ -28,8 +28,8 @@ public class ConfigManager {
         CONFIG.playerListOptions.enableListDisplay = true;
         CONFIG.messageOptions.enableChatMessages = true;
         CONFIG.messageOptions.wentAfk = "%player:displayname% <yellow>is now AFK<r>";
-        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK (Gone for %player:afkduration%)<r>";
-        CONFIG.messageOptions.defaultReason = "";
+        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK <gray>(Was gone for <green>%player:afkduration%ms<gray>)<r>";
+        CONFIG.messageOptions.defaultReason = "<gray>poof!<r>";
     }
 
     public static void loadConfig() {

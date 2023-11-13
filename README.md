@@ -2,12 +2,11 @@
 
 **SAKURAS-ENHANCEMENTS** :blush:
 - Added '**/afkdisplay reload**' command.  This allows an Administrator to reload the configuration while the server is running.
-- Added '**/afkdisplay set [Player] [reason]**' command.  This allows any administrator to set the AFK status of a player, with an optional [reason]
+- Added '**/afkdisplay set [Player]**' command.  This allows any administrator to set the AFK status of a player.
 - Added '**/afkdisplay clear [Player]**' command.  This allows any administrator to clear the AFK status of a player.
 - Added '**/afkdisplay info [Player]**' command.  This allows any administrator to check the AFK status of a player, and display the time and duration since they went AFK.
 - Added '**/afkdisplay update [Player]**' command.  This allows any administrator to force a player list update for a player.
 - Added '**/afkinfo [Player]**' command.  Does the same thing as /afkdisplay info, but can be used for Mods, or players, or however you like to configure it for people to see.
-- [ENHANCEMENT] Added '**[reason]**' option to '**/afk**' command, and it should now display under the Afk Date/Time/Info query.
 - ***[REWRITE]***: Complete rewrite of the Config File manager to allow the '**/afkdisplay reload**' command to work.
 - **[PERMISSIONS]**: Added a security permissions for the '**/afkdisplay**' command via [Luck Permissions](https://luckperms.net/) with the AfkDisplayCommandPermissions setting the default restrictions, the '**/afk**' and '**/afkinfo**' command also has restrictions using AfkCommandPermissions/AfkInfoCommandPermissions setting as well.
 - Added a placeholder **%player:afkdisplayname%** so that you can use this as a replacement for the **%player:displayname%** placeholder under other Mods, such as [Styled Playerlist](https://modrinth.com/mod/styledplayerlist "Styled Playerlist").
@@ -66,5 +65,5 @@ enableChatMessages = true
 wentAfk = "%player:displayname% <yellow>is now AFK<r>"
 returned = "%player:displayname% <yellow>is no longer AFK<r>"
 # [ENHANCEMENT] Default reason for going AFK.
-defaultReason=""
+defaultReason="<gray>poof!<r>"
 ```
