@@ -7,19 +7,12 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import eu.pb4.placeholders.api.PlaceholderResult;
 import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.placeholders.api.TextParserUtils;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
 public final class AfkDisplayPlaceholders {
     static void registerAfk() {
-        if (CONFIG.afkDisplayOptions.enableAfkCommand) {
-            CommandRegistrationCallback.EVENT
-                    .register((dispatcher, registryAccess, environment) -> AfkCommand.register(dispatcher));
-        }
-        CommandRegistrationCallback.EVENT
-                .register((dispatcher, registryAccess, environment) -> AfkDisplayCommand.register(dispatcher));
         Placeholders.register(new Identifier("player", "afk"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");

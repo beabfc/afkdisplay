@@ -1,9 +1,8 @@
 package io.github.beabfc.afkdisplay;
 
+import static io.github.beabfc.afkdisplay.AfkDisplayInfo.*;
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
 import static net.minecraft.server.command.CommandManager.*;
-
-import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,42 +14,41 @@ import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Util;
 
 public class AfkDisplayCommand {
         public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
                 dispatcher.register(literal("afkdisplay")
-                                .requires(Permissions.require("afkdisplay.about",
+                                .requires(Permissions.require("afkdisplay.afkdisplay",
                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                 .executes(ctx -> afkAbout(ctx.getSource(), ctx))
                                 .then(literal("reload")
-                                                .requires(Permissions.require("afkdisplay.reload",
+                                                .requires(Permissions.require("afkdisplay.afkdisplay.reload",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                                 .executes(ctx -> afkReload(ctx.getSource(), ctx)))
                                 .then(literal("set")
-                                                .requires(Permissions.require("afkdisplay.set",
+                                                .requires(Permissions.require("afkdisplay.afkdisplay.set",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                                 .then(argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> setAfk(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player")))))
                                 .then(literal("clear")
-                                                .requires(Permissions.require("afkdisplay.clear",
+                                                .requires(Permissions.require("afkdisplay.afkdisplay.clear",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                                 .then(argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> clearAfk(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player")))))
-                                .then(literal("get")
-                                                .requires(Permissions.require("afkdisplay.get",
+                                .then(literal("info")
+                                                .requires(Permissions.require("afkdisplay.afkdisplay.info",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                                 .then(argument("player", EntityArgumentType.player())
-                                                                .executes(ctx -> getAfkPlayer(ctx.getSource(),
+                                                                .executes(ctx -> infoAfkPlayer(ctx.getSource(),
                                                                                 EntityArgumentType.getPlayer(ctx,
                                                                                                 "player"),
                                                                                 ctx))))
                                 .then(literal("update")
-                                                .requires(Permissions.require("afkdisplay.update",
+                                                .requires(Permissions.require("afkdisplay.afkdisplay.update",
                                                                 CONFIG.afkDisplayOptions.afkDisplayCommandPermissions))
                                                 .then(argument("player", EntityArgumentType.player())
                                                                 .executes(ctx -> updatePlayer(ctx.getSource(),
@@ -74,7 +72,6 @@ public class AfkDisplayCommand {
                 AfkPlayer afkPlayer = (AfkPlayer) player;
                 String user = src.getDisplayName().toString();
                 String target = player.getEntityName();
-
                 afkPlayer.enableAfk();
                 AfkDisplayLogger.info(user + " set player " + target + " as AFK");
                 return 1;
@@ -89,24 +86,12 @@ public class AfkDisplayCommand {
                 return 1;
         }
 
-        private static int getAfkPlayer(ServerCommandSource src, ServerPlayerEntity player,
+        private static int infoAfkPlayer(ServerCommandSource src, ServerPlayerEntity player,
                         CommandContext<ServerCommandSource> context) {
                 AfkPlayer afkPlayer = (AfkPlayer) player;
                 String user = src.getDisplayName().toString();
                 String target = player.getEntityName();
-                String AfkStatus;
-                long duration;
-                if (afkPlayer.isAfk()) {
-                        duration = Util.getMeasuringTimeMs() - afkPlayer.afkTimeMs();
-                        AfkStatus = "Player: " + target + "\nAfk Since: <green>" + afkPlayer.afkTimeString()
-                                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                                        + "<r>.";
-                        AfkDisplayLogger.info(user + " displayed " + target + "'s AFK time/duration.");
-                } else {
-                        AfkStatus = "Player: " + target + " is not marked as AFK.";
-                        AfkDisplayLogger.info(user + " attempted to display " + target
-                                        + "'s AFK time/duration, but they aren't AFK.");
-                }
+                String AfkStatus = getAfkInfoString(afkPlayer, user, target);
                 context.getSource().sendFeedback(() -> TextParserUtils.formatText(AfkStatus), false);
                 return 1;
         }
