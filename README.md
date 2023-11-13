@@ -4,11 +4,14 @@
 - Added '**/afkdisplay reload**' command.  This allows an Administrator to reload the configuration while the server is running.
 - Added '**/afkdisplay set [Player]**' command.  This allows any administrator to set the AFK status of a player.
 - Added '**/afkdisplay clear [Player]**' command.  This allows any administrator to clear the AFK status of a player.
+- Added '**/afkdisplay get [Player]**' command.  This allows any administrator to check the AFK status of a player, and display the time and duration since they went AFK.
 - Added '**/afkdisplay update [Player]**' command.  This allows any administrator to force a player list update for a player.
 - ***[REWRITE]***: Complete rewrite of the Config File manager to allow the '**/afkdisplay reload**' command to work.
 - **[PERMISSIONS]**: Added a security permissions for the '**/afkdisplay**' command via [Luck Permissions](https://luckperms.net/) with the AfkDisplayCommandPermissions setting the default restrictions, the '**/afk**' command also has restrictions using AfkCommandPermissions setting as well.
 - Added a placeholder **%player:afkdisplayname%** so that you can use this as a replacement for the **%player:displayname%** placeholder under other Mods, such as [Styled Playerlist](https://modrinth.com/mod/styledplayerlist "Styled Playerlist").
 ***NOTE that this method was designed to be fully compliant with LuckPerms Prefixes under Styled Playerlist, because the standard method for playerlist updating fails, or you can simply use %player:afk% to format names if you like.***
+- Added a placeholder **%player:afkduration%** so that you can get the time (HH:MM:SS) since someone went AFK.
+- Added a placeholder **%player:afktime%** so that you can get the Time/Date when someone went AFK.
 
 ## Original README:
 Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support, **[ENHANCEMENT]** now supporting all Placeholder API formatting nodes such as: yellow or bold natively; which depreciates all of the old "color" specific settings.
@@ -22,7 +25,7 @@ The configuration is located in `afkdisplay.toml` inside your servers config fol
 ```toml
 # [ENHANCEMENT] Added a main catagory for options
 [AfkDisplayOptions]
-# Allows you to disable the /afk command to mark yourself or other players (only for operators) as AFK 
+# Allows you to disable the /afk command to mark yourself or other players (only for operators) as AFK
 enableAfkCommand = true
 # [ENHANCEMENT] config for the /afk default command permissions, configurable with Luck Perms (afkdisplay.afk) node
 afkCommandPermissions = 0
