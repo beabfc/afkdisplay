@@ -1,6 +1,7 @@
 package io.github.beabfc.afkdisplay;
 
 import static io.github.beabfc.afkdisplay.AfkDisplay.*;
+import static io.github.beabfc.afkdisplay.ConfigManager.*;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
@@ -22,7 +23,9 @@ public class AfkDisplayInfo {
         String modInfo3 = "URL: <blue>" + MOD_URL_RESOURCE + "</blue>";
         // I tried using <url:[value]> and combining these... but it wasnt working ...
 
-        Text info = TextParserUtils.formatText(modInfo1 + "\n" + modInfo2 + "\n" + modInfo3);
+        Text info = TextParserUtils
+                .formatText(modInfo1 + "\n" + modInfo2 + "\n" + modInfo3
+                        + "\nTest: <url:[https://github.com]>github</url>");
         return info;
 
     }
@@ -32,22 +35,36 @@ public class AfkDisplayInfo {
         long duration;
         if (afkPlayer.isAfk()) {
             duration = Util.getMeasuringTimeMs() - afkPlayer.afkTimeMs();
-            if (afkPlayer.afkReason() == "") {
-                AfkStatus = "<bold>AFK Information:"
-                        + "<r>\nPlayer: " + target
-                        + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
-                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                        + "ms (Format:HH:mm:ss)"
-                        + "<r>\nReason: none"
-                        + "<r>";
+            if (CONFIG.messageOptions.prettyDuration) {
+                if (afkPlayer.afkReason() == "") {
+                    AfkStatus = "<bold><light_purple>AFK Information:"
+                            + "<r>\nPlayer: " + target
+                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationWords(duration, true, true)
+                            + "<r>\nReason: none";
+                } else {
+                    AfkStatus = "<bold><light_purple>AFK Information:"
+                            + "<r>\nPlayer: " + target
+                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationWords(duration, true, true)
+                            + "<r>\nReason: " + afkPlayer.afkReason();
+                }
             } else {
-                AfkStatus = "<bold>AFK Information:"
-                        + "<r>\nPlayer: " + target
-                        + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
-                        + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                        + "ms (Format:HH:mm:ss)"
-                        + "<r>\nReason: " + afkPlayer.afkReason()
-                        + "<r>";
+                if (afkPlayer.afkReason() == "") {
+                    AfkStatus = "<bold><light_purple>AFK Information:"
+                            + "<r>\nPlayer: " + target
+                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                            + "ms (Format:HH:mm:ss)"
+                            + "<r>\nReason: none";
+                } else {
+                    AfkStatus = "<bold><light_purple>AFK Information:"
+                            + "<r>\nPlayer: " + target
+                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
+                            + "ms (Format:HH:mm:ss)"
+                            + "<r>\nReason: " + afkPlayer.afkReason();
+                }
             }
             AfkDisplayLogger.info(user + " displayed " + target + "'s AFK info.");
         } else {

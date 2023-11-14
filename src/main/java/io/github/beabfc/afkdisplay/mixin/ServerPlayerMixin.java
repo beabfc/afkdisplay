@@ -2,6 +2,7 @@ package io.github.beabfc.afkdisplay.mixin;
 
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -14,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import eu.pb4.placeholders.api.PlaceholderContext;
 import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.placeholders.api.TextParserUtils;
+//import io.github.beabfc.afkdisplay.AfkDisplayLogger;
 import io.github.beabfc.afkdisplay.AfkPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -61,16 +63,16 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
             return;
         setAfkTime();
         if (reason == null && CONFIG.messageOptions.defaultReason == null) {
-            setAfkReason("none");
+            setAfkReason("<red>none");
         } else if (reason == null || reason == "") {
-            setAfkReason("none");
+            setAfkReason("<red>none");
             sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
                     PlaceholderContext.of(this)));
         } else {
             setAfkReason(reason);
             sendAfkMessage(
                     Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk
-                            + ", " + reason),
+                            + "<yellow>,<r> " + reason),
                             PlaceholderContext.of(this)));
         }
         setAfk(true);
@@ -79,11 +81,29 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     public void disableAfk() {
         if (!isAfk)
             return;
-        sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.returned),
-                PlaceholderContext.of(this)));
+        if (CONFIG.messageOptions.prettyDuration) {
+            long duration = Util.getMeasuringTimeMs() - (this.afkTimeMs);
+            String ret = CONFIG.messageOptions.returned + " <gray>(Gone for: <green>"
+                    + DurationFormatUtils.formatDurationWords(duration, true, true) + "<gray>)<r>";
+            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(ret), PlaceholderContext.of(this)));
+        } else {
+            long duration = Util.getMeasuringTimeMs() - (this.afkTimeMs);
+            String ret = CONFIG.messageOptions.returned + " <gray>(Gone for: <green>"
+                    + DurationFormatUtils.formatDurationHMS(duration) + "<gray>)<r>";
+            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(ret), PlaceholderContext.of(this)));
+        }
         setAfk(false);
         clearAfkTime();
         clearAfkReason();
+    }
+
+    public void updatePlayerList() {
+        if (this.isAfk()) {
+            this.server
+                    .getPlayerManager()
+                    .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
+            // AfkDisplayLogger.info("sending player list update for " + player.getName());
+        }
     }
 
     private void sendAfkMessage(Text text) {
@@ -114,7 +134,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
 
     private void setAfkReason(String reason) {
         if (reason == null || reason == "") {
-            this.afkReason = "none";
+            this.afkReason = "<red>none";
         } else {
             this.afkReason = reason;
         }

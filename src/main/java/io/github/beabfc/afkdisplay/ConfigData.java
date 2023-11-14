@@ -26,12 +26,14 @@ public class ConfigData {
     public static class PlayerListOptions {
         public boolean enableListDisplay;
         public String afkPlayerName;
+        public int afkUpdateTime;
     }
 
     public static class MessageOptions {
         public boolean enableChatMessages;
         public String wentAfk;
         public String returned;
+        public boolean prettyDuration;
         public String defaultReason;
     }
 }

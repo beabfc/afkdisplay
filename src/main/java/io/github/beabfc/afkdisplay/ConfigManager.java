@@ -26,9 +26,11 @@ public class ConfigManager {
         CONFIG.packetOptions.timeoutSeconds = 180;
         CONFIG.playerListOptions.afkPlayerName = "<i><gray>[AFK] %player:displayname%<r>";
         CONFIG.playerListOptions.enableListDisplay = true;
+        CONFIG.playerListOptions.afkUpdateTime = 60;
         CONFIG.messageOptions.enableChatMessages = true;
         CONFIG.messageOptions.wentAfk = "%player:displayname% <yellow>is now AFK<r>";
-        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK <gray>(Was gone for <green>%player:afkduration%ms<gray>)<r>";
+        CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK<r>";
+        CONFIG.messageOptions.prettyDuration = true;
         CONFIG.messageOptions.defaultReason = "<gray>poof!<r>";
     }
 

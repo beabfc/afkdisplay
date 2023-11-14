@@ -13,6 +13,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Util;
+import java.time.Duration;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkMixin {
@@ -23,12 +24,28 @@ public abstract class ServerPlayNetworkMixin {
     private void updateAfkStatus(CallbackInfo ci) {
         AfkPlayer afkPlayer = (AfkPlayer) player;
         int timeoutSeconds = CONFIG.packetOptions.timeoutSeconds;
-        if (afkPlayer.isAfk() || timeoutSeconds <= 0)
-            return;
         long afkDuration = Util.getMeasuringTimeMs() - this.player.getLastActionTime();
-        if (afkDuration > timeoutSeconds * 1000L) {
-            // afkPlayer.enableAfk(CONFIG.messageOptions.defaultReason);
-            afkPlayer.enableAfk("timeout");
+        if (afkPlayer.isAfk()) {
+            if (CONFIG.playerListOptions.afkUpdateTime > 0) {
+                // Setting this afkTime value also has a positive side effect of updating the
+                // player list every now and then alone, but throwing updatePlayerList() is what
+                // we are trying to catch here.
+                Duration afkTime = Duration.ofMillis(afkDuration);
+                Duration configTime = Duration.ofSeconds(CONFIG.playerListOptions.afkUpdateTime);
+                if (afkTime.toSeconds() > 0) {
+                    boolean isDiv = afkTime.toSeconds() % configTime.toSeconds() == 0;
+                    if (isDiv) {
+                        afkPlayer.updatePlayerList();
+                    }
+                }
+            }
+            return;
+        } else if (timeoutSeconds <= 0) {
+            return;
+        } else {
+            if (afkDuration > timeoutSeconds * 1000L) {
+                afkPlayer.enableAfk("timeout");
+            }
         }
     }
 

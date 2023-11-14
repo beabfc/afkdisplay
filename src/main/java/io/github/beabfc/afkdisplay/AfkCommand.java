@@ -4,7 +4,7 @@ import static io.github.beabfc.afkdisplay.ConfigManager.*;
 import static net.minecraft.server.command.CommandManager.*;
 
 import com.mojang.brigadier.CommandDispatcher;
-//import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -15,8 +15,11 @@ public class AfkCommand {
         dispatcher.register(
                 literal("afk")
                         .requires(Permissions.require("afkdisplay.afk", 0))
-                        // .then(argument("reason", StringArgumentType.greedyString()))
-                        .executes(ctx -> setAfk(ctx.getSource(), "")));
+                        .executes(ctx -> setAfk(ctx.getSource(), ""))
+                        .then(argument("reason", StringArgumentType.greedyString())
+                                .requires(Permissions.require("afkdisplay.afk", 0))
+                                .executes(
+                                        ctx -> setAfk(ctx.getSource(), StringArgumentType.getString(ctx, "reason")))));
     }
 
     private static int setAfk(ServerCommandSource src, String reason) throws CommandSyntaxException {

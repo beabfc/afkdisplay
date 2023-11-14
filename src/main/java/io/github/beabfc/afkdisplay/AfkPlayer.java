@@ -13,4 +13,6 @@ public interface AfkPlayer {
     String afkTimeString();
 
     String afkReason();
+
+    void updatePlayerList();
 }

@@ -43,18 +43,25 @@ public final class AfkDisplayPlaceholders {
     };
 
     static void registerAfkDuration() {
-        // long now = Util.getMeasuringTimeMs();
         Placeholders.register(new Identifier("player", "afkduration"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
             }
             AfkPlayer player = (AfkPlayer) ctx.player();
             assert player != null;
-            Text result = player.isAfk()
-                    ? TextParserUtils.formatText(DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
-                            player.afkTimeMs()))
-                    : TextParserUtils.formatText("");
-            return PlaceholderResult.value(result);
+            if (CONFIG.messageOptions.prettyDuration) {
+                Text result = player.isAfk()
+                        ? TextParserUtils.formatText(DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
+                                player.afkTimeMs(), true, true))
+                        : TextParserUtils.formatText("");
+                return PlaceholderResult.value(result);
+            } else {
+                Text result = player.isAfk()
+                        ? TextParserUtils.formatText(DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
+                                player.afkTimeMs()))
+                        : TextParserUtils.formatText("");
+                return PlaceholderResult.value(result);
+            }
         });
     };
 
