@@ -10,11 +10,12 @@
 - [ENHANCEMENT] Added '**/afk [Reason]**' This allows any user to use a [Reason] along with setting their AKF status.
 - ***[REWRITE]***: Complete rewrite of the Config File manager to allow the '**/afkdisplay reload**' command to work.
 - **[PERMISSIONS]**: Added a security permissions for the '**/afkdisplay**' command via [Luck Permissions](https://luckperms.net/) with the AfkDisplayCommandPermissions setting the default restrictions, the '**/afk**' and '**/afkinfo**' command also has restrictions using AfkCommandPermissions/AfkInfoCommandPermissions setting as well.
-- Added a placeholder **%player:afkdisplayname%** so that you can use this as a replacement for the **%player:displayname%** placeholder under other Mods, such as [Styled Playerlist](https://modrinth.com/mod/styledplayerlist "Styled Playerlist").
+- Added a placeholder **%afkdisplay:name%** so that you can use this as a replacement for the **%player:displayname%** placeholder under other Mods, such as [Styled Playerlist](https://modrinth.com/mod/styledplayerlist "Styled Playerlist").
 ***NOTE that this method was designed to be fully compliant with LuckPerms Prefixes under Styled Playerlist, because the standard method for playerlist updating fails, or you can simply use %player:afk% to format names if you like.***
-- Added a placeholder **%player:afkduration%** so that you can get the time since someone went AFK.
-- Added a placeholder **%player:afktime%** so that you can get the Time/Date when someone went AFK.
-- Added a placeholder **%player:afkreason%** so that you can port the Afk Reason for why someone went AFK.
+- Added a placeholder **%afkdisplay:duration%** so that you can get the time since someone went AFK.
+- Added a placeholder **%afkdisplay:time%** so that you can get the Time/Date when someone went AFK.
+- Added a placeholder **%afkdisplay:reason%** so that you can port the Afk Reason for why someone went AFK.
+- [RENAME] renamed the **'%player:afk%**' placeholder to **'%afkdisplay:afk%'** based on PatBox's feedback.  They prefer that people use **'mod_name:<example>'** for their mods.
 - Added a special configuration option 'prettyDuration' to configure the AFK Duration in a more human-readable format.
 - Added a special configuration option 'afkUpdateTime' to configure how often an AFK player's player list entry gets updated (mainly to update the %player:afkduration% value.)
 
@@ -42,7 +43,7 @@ afkInfoCommandPermissions = 2
 afkDisplayCommandPermissions = 3
 # This will be the value of the placeholder %player:afk% if a player is AFK, [ENHANCEMENT] option now accepts formatting nodes
 afkPlaceholder = "<i><gray>[AFK]<r>"
-# [ENHANCEMENT] a new placeholder %player:afkdisplayname% for backporting the entire %displayname% for use in other Mods, such as Styled Playerlist
+# [ENHANCEMENT] a new placeholder %afkdisplay:name% for backporting the entire %displayname% for use in other Mods, such as Styled Playerlist
 afkDisplayPlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>"
 # [ENHANCEMENT] value for when player is NOT AFK, (ie. the default displayname)
 afkDisplayPlaceholder = "%player:displayname%"

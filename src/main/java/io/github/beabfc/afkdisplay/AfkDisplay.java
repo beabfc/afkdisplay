@@ -30,7 +30,7 @@ public class AfkDisplay implements DedicatedServerModInitializer {
         CommandRegistrationCallback.EVENT
                 .register((dispatcher, registryAccess, environment) -> AfkDisplayCommand.register(dispatcher));
         AfkDisplayPlaceholders.registerAfk();
-        AfkDisplayPlaceholders.registerAfkDisplay();
+        AfkDisplayPlaceholders.registerAfkDisplayName();
         AfkDisplayPlaceholders.registerAfkDuration();
         AfkDisplayPlaceholders.registerAfkTime();
         AfkDisplayPlaceholders.registerAfkReason();

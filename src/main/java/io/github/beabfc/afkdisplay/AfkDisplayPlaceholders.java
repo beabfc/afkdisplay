@@ -1,5 +1,6 @@
 package io.github.beabfc.afkdisplay;
 
+import static io.github.beabfc.afkdisplay.AfkDisplay.*;
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
@@ -11,9 +12,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
+// Renamed the namespace to "MOD_ID" after PatBox's conversation.  He would prefer people use "mod_name" instead of using "player" in their mods.  Using "%afkdisplay:display_name%" also is too many display words, so "name"
 public final class AfkDisplayPlaceholders {
     static void registerAfk() {
-        Placeholders.register(new Identifier("player", "afk"), (ctx, arg) -> {
+        Placeholders.register(new Identifier(MOD_ID, "afk"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
             }
@@ -26,8 +28,8 @@ public final class AfkDisplayPlaceholders {
         });
     };
 
-    static void registerAfkDisplay() {
-        Placeholders.register(new Identifier("player", "afkdisplayname"), (ctx, arg) -> {
+    static void registerAfkDisplayName() {
+        Placeholders.register(new Identifier(MOD_ID, "name"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
             }
@@ -43,7 +45,7 @@ public final class AfkDisplayPlaceholders {
     };
 
     static void registerAfkDuration() {
-        Placeholders.register(new Identifier("player", "afkduration"), (ctx, arg) -> {
+        Placeholders.register(new Identifier(MOD_ID, "duration"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
             }
@@ -66,7 +68,7 @@ public final class AfkDisplayPlaceholders {
     };
 
     static void registerAfkTime() {
-        Placeholders.register(new Identifier("player", "afktime"), (ctx, arg) -> {
+        Placeholders.register(new Identifier(MOD_ID, "time"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
             }
@@ -79,7 +81,7 @@ public final class AfkDisplayPlaceholders {
     };
 
     static void registerAfkReason() {
-        Placeholders.register(new Identifier("player", "afkreason"), (ctx, arg) -> {
+        Placeholders.register(new Identifier(MOD_ID, "reason"), (ctx, arg) -> {
             if (!ctx.hasPlayer()) {
                 return PlaceholderResult.invalid("No player!");
             }
