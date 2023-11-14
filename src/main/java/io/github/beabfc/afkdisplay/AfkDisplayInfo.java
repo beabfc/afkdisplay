@@ -21,11 +21,11 @@ public class AfkDisplayInfo {
         String modInfo1 = MOD_ID + "-" + MOD_VERSION;
         String modInfo2 = "Author: <light_purple>" + MOD_AUTHO_STRING + "</light_purple>";
         String modInfo3 = "URL: <blue>" + MOD_URL_RESOURCE + "</blue>";
-        // I tried using <url:[value]> and combining these... but it wasnt working ...
+        // I tried using <url:[value]> and combining these in one String, but it wasnt
+        // working ...
 
         Text info = TextParserUtils
-                .formatText(modInfo1 + "\n" + modInfo2 + "\n" + modInfo3
-                        + "\nTest: <url:[https://github.com]>github</url>");
+                .formatText(modInfo1 + "\n" + modInfo2 + "\n" + modInfo3);
         return info;
 
     }
