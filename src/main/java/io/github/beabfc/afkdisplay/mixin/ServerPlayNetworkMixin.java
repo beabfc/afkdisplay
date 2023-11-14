@@ -2,6 +2,8 @@ package io.github.beabfc.afkdisplay.mixin;
 
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
 
+import java.time.Duration;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +15,6 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Util;
-import java.time.Duration;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkMixin {
@@ -29,7 +30,10 @@ public abstract class ServerPlayNetworkMixin {
             if (CONFIG.playerListOptions.afkUpdateTime > 0) {
                 // Setting this afkTime value also has a positive side effect of updating the
                 // player list every now and then alone, but throwing updatePlayerList() is what
-                // we are trying to catch here.
+                // we are trying to catch here to force an update every 60 seconds regardless.
+                // But without this, the player list will remain stale unless you /afkdisplay
+                // update [Player],
+                // Which also incidently can fix display update bugs in Styled Player List.
                 Duration afkTime = Duration.ofMillis(afkDuration);
                 Duration configTime = Duration.ofSeconds(CONFIG.playerListOptions.afkUpdateTime);
                 if (afkTime.toSeconds() > 0) {
