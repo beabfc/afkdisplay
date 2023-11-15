@@ -53,8 +53,9 @@ public final class AfkDisplayPlaceholders {
             assert player != null;
             if (CONFIG.messageOptions.prettyDuration) {
                 Text result = player.isAfk()
-                        ? TextParserUtils.formatText(DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
-                                player.afkTimeMs(), true, true))
+                        ? TextParserUtils.formatText(
+                                "<green>" + DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
+                                        player.afkTimeMs(), true, true))
                         : TextParserUtils.formatText("");
                 return PlaceholderResult.value(result);
             } else {
@@ -74,7 +75,7 @@ public final class AfkDisplayPlaceholders {
             }
             AfkPlayer player = (AfkPlayer) ctx.player();
             assert player != null;
-            Text result = player.isAfk() ? TextParserUtils.formatText(player.afkTimeString())
+            Text result = player.isAfk() ? TextParserUtils.formatText("<green>" + player.afkTimeString())
                     : TextParserUtils.formatText("");
             return PlaceholderResult.value(result);
         });

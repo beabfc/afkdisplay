@@ -98,12 +98,11 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
     }
 
     public void updatePlayerList() {
-        if (this.isAfk()) {
-            this.server
-                    .getPlayerManager()
-                    .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
-            // AfkDisplayLogger.info("sending player list update for " + player.getName());
-        }
+        this.server
+                .getPlayerManager()
+                .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
+        // AfkDisplayLogger.info("sending player list update for " + player.getName());
+
     }
 
     private void sendAfkMessage(Text text) {

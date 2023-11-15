@@ -1,20 +1,16 @@
 package io.github.beabfc.afkdisplay;
 
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import static io.github.beabfc.afkdisplay.ModData.*;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 
 public class AfkDisplay implements DedicatedServerModInitializer {
-    public static String MOD_VERSION;
-    public static final String MOD_ID = "afkdisplay";
-    public static final String MOD_NAME = "AfkDisplay";
-    public static final String MOD_AUTHO_STRING = "beabfc, (forked by) sakura-ryoko";
-    public static final String MOD_URL_RESOURCE = "https://github.com/beabfc/afkdisplay";
 
     @Override
     public void onInitializeServer() {
-        AfkDisplayInfo.getVersionInfo();
+        AfkDisplayInfo.initModInfo();
         AfkDisplayLogger.initLogger(MOD_ID);
         ConfigManager.initConfig();
         ConfigManager.loadConfig();

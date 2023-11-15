@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import io.github.beabfc.afkdisplay.AfkDisplayLogger;
 import io.github.beabfc.afkdisplay.AfkPlayer;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -40,6 +41,7 @@ public abstract class ServerPlayNetworkMixin {
                     boolean isDiv = afkTime.toSeconds() % configTime.toSeconds() == 0;
                     if (isDiv) {
                         afkPlayer.updatePlayerList();
+                        AfkDisplayLogger.info("player list entry for " + player.getName() + " has been updated.");
                     }
                 }
             }

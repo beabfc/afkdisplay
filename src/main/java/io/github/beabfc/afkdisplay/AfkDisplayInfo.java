@@ -1,20 +1,27 @@
 package io.github.beabfc.afkdisplay;
 
-import static io.github.beabfc.afkdisplay.AfkDisplay.*;
+//import static io.github.beabfc.afkdisplay.AfkDisplay.*;
 import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import static io.github.beabfc.afkdisplay.ModData.*;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import eu.pb4.placeholders.api.TextParserUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 
 public class AfkDisplayInfo {
-    public static void getVersionInfo() {
+    public static void initModInfo() {
         final ModContainer CONTAINER = FabricLoader.getInstance().getModContainer(MOD_ID).get();
+        // MC_PROV =
         MOD_VERSION = CONTAINER.getMetadata().getVersion().getFriendlyString();
+        MOD_NAME = CONTAINER.getMetadata().getName();
+        MOD_AUTHO = CONTAINER.getMetadata().getAuthors();
+        MOD_CONTRIB  = CONTAINER.getMetadata().getContributors();
+        // MOD_CONTACTS = CONTAINER.getMetadata().getContact();
     }
 
     public static Text getModInfo() {
