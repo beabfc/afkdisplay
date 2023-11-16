@@ -1,8 +1,9 @@
-package io.github.beabfc.afkdisplay;
+package io.github.beabfc.afkdisplay.commands;
 
-import static io.github.beabfc.afkdisplay.AfkDisplayInfo.*;
-import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import static io.github.beabfc.afkdisplay.util.AfkDisplayInfo.*;
+import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
 import static net.minecraft.server.command.CommandManager.*;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -28,7 +29,7 @@ public class AfkInfoCommand {
 
         private static int infoAfkPlayer(ServerCommandSource src, ServerPlayerEntity player,
                         CommandContext<ServerCommandSource> context) {
-                AfkPlayer afkPlayer = (AfkPlayer) player;
+                AfkPlayerData afkPlayer = (AfkPlayerData) player;
                 String user = src.getName();
                 String target = player.getEntityName();
                 String AfkStatus = getAfkInfoString(afkPlayer, user, target);

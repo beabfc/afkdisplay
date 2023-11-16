@@ -1,6 +1,6 @@
 package io.github.beabfc.afkdisplay.mixin;
 
-import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.spongepowered.asm.mixin.Final;
@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import eu.pb4.placeholders.api.PlaceholderContext;
 import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.placeholders.api.TextParserUtils;
-//import io.github.beabfc.afkdisplay.AfkDisplayLogger;
-import io.github.beabfc.afkdisplay.AfkPlayer;
+//import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
@@ -27,7 +27,7 @@ import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
 @Mixin(ServerPlayerEntity.class)
-public abstract class ServerPlayerMixin extends Entity implements AfkPlayer {
+public abstract class ServerPlayerMixin extends Entity implements AfkPlayerData {
     @Shadow
     @Final
     public MinecraftServer server;

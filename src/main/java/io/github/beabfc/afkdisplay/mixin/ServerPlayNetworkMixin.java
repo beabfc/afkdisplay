@@ -1,6 +1,6 @@
 package io.github.beabfc.afkdisplay.mixin;
 
-import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
 
 import java.time.Duration;
 
@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.beabfc.afkdisplay.AfkDisplayLogger;
-import io.github.beabfc.afkdisplay.AfkPlayer;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -24,7 +24,7 @@ public abstract class ServerPlayNetworkMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void updateAfkStatus(CallbackInfo ci) {
-        AfkPlayer afkPlayer = (AfkPlayer) player;
+        AfkPlayerData afkPlayer = (AfkPlayerData) player;
         int timeoutSeconds = CONFIG.packetOptions.timeoutSeconds;
         long afkDuration = Util.getMeasuringTimeMs() - this.player.getLastActionTime();
         if (afkPlayer.isAfk()) {

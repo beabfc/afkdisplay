@@ -1,6 +1,7 @@
-package io.github.beabfc.afkdisplay;
+package io.github.beabfc.afkdisplay.commands;
 
-import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import static net.minecraft.server.command.CommandManager.*;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -23,7 +24,7 @@ public class AfkCommand {
     }
 
     private static int setAfk(ServerCommandSource src, String reason) throws CommandSyntaxException {
-        AfkPlayer player = (AfkPlayer) src.getPlayerOrThrow();
+        AfkPlayerData player = (AfkPlayerData) src.getPlayerOrThrow();
         if (reason == null && CONFIG.messageOptions.defaultReason == null) {
             player.enableAfk("via /afk");
         } else if (reason == null || reason == "") {

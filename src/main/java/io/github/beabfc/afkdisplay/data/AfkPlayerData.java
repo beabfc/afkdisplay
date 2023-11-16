@@ -1,6 +1,6 @@
-package io.github.beabfc.afkdisplay;
+package io.github.beabfc.afkdisplay.data;
 
-public interface AfkPlayer {
+public interface AfkPlayerData {
     boolean isAfk();
 
     void enableAfk(String reason);

@@ -1,4 +1,4 @@
-package io.github.beabfc.afkdisplay;
+package io.github.beabfc.afkdisplay.data;
 
 public class ConfigData {
     public AfkDisplayOptions afkDisplayOptions = new AfkDisplayOptions();

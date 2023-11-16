@@ -1,6 +1,9 @@
-package io.github.beabfc.afkdisplay;
+package io.github.beabfc.afkdisplay.config;
 
-import static io.github.beabfc.afkdisplay.AfkDisplay.*;
+import static io.github.beabfc.afkdisplay.data.ModData.*;
+
+import io.github.beabfc.afkdisplay.data.ConfigData;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 
 import java.io.File;
 
@@ -35,7 +38,7 @@ public class ConfigManager {
     }
 
     public static void loadConfig() {
-        File conf = FabricLoader.getInstance().getConfigDir().resolve(MOD_ID + ".toml").toFile();
+        File conf = FabricLoader.getInstance().getConfigDir().resolve(AFK_MOD_ID + ".toml").toFile();
         try {
             if (conf.exists()) {
                 CONFIG = new Toml().read(conf).to(ConfigData.class);

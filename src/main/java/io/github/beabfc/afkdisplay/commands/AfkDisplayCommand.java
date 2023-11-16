@@ -1,7 +1,10 @@
-package io.github.beabfc.afkdisplay;
+package io.github.beabfc.afkdisplay.commands;
 
-import static io.github.beabfc.afkdisplay.AfkDisplayInfo.*;
-import static io.github.beabfc.afkdisplay.ConfigManager.*;
+import io.github.beabfc.afkdisplay.util.AfkDisplayInfo;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
+import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
+import io.github.beabfc.afkdisplay.config.ConfigManager;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import static net.minecraft.server.command.CommandManager.*;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -97,7 +100,7 @@ public class AfkDisplayCommand {
         }
 
         private static int setAfk(ServerCommandSource src, ServerPlayerEntity player, String reason) {
-                AfkPlayer afkPlayer = (AfkPlayer) player;
+                AfkPlayerData afkPlayer = (AfkPlayerData) player;
                 String user = src.getName();
                 String target = player.getEntityName();
                 if (reason == null && CONFIG.messageOptions.defaultReason == null) {
@@ -115,7 +118,7 @@ public class AfkDisplayCommand {
         }
 
         private static int clearAfk(ServerCommandSource src, ServerPlayerEntity player) {
-                AfkPlayer afkPlayer = (AfkPlayer) player;
+                AfkPlayerData afkPlayer = (AfkPlayerData) player;
                 String user = src.getName();
                 String target = player.getEntityName();
                 afkPlayer.disableAfk();
@@ -125,10 +128,10 @@ public class AfkDisplayCommand {
 
         private static int infoAfkPlayer(ServerCommandSource src, ServerPlayerEntity player,
                         CommandContext<ServerCommandSource> context) {
-                AfkPlayer afkPlayer = (AfkPlayer) player;
+                AfkPlayerData afkPlayer = (AfkPlayerData) player;
                 String user = src.getName();
                 String target = player.getEntityName();
-                String AfkStatus = getAfkInfoString(afkPlayer, user, target);
+                String AfkStatus = AfkDisplayInfo.getAfkInfoString(afkPlayer, user, target);
                 context.getSource().sendFeedback(() -> TextParserUtils.formatText(AfkStatus), false);
                 return 1;
         }
@@ -137,7 +140,7 @@ public class AfkDisplayCommand {
                         CommandContext<ServerCommandSource> context) {
                 String user = src.getName();
                 String target = player.getEntityName();
-                AfkPlayer afkPlayer = (AfkPlayer) player;
+                AfkPlayerData afkPlayer = (AfkPlayerData) player;
                 afkPlayer.updatePlayerList();
                 context.getSource().sendFeedback(() -> Text.literal("Updating player list entry for " + target + ""),
                                 false);
