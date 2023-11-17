@@ -88,7 +88,7 @@ public class AfkDisplayCommand {
         }
 
         private static int afkAbout(ServerCommandSource src, CommandContext<ServerCommandSource> context) {
-                Text ModInfo = AfkDisplayInfo.getModInfo();
+                Text ModInfo = AfkDisplayInfo.getModInfoText();
                 context.getSource().sendFeedback(() -> ModInfo, false);
                 return 1;
         }

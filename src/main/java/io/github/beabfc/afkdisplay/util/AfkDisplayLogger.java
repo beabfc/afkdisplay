@@ -9,11 +9,10 @@ public class AfkDisplayLogger {
     private static Logger LOGGER;
     private static boolean log;
 
-    public static void initLogger(String ModID) {
-        LOGGER = LogManager.getLogger(ModID);
+    public static void initLogger() {
+        LOGGER = LogManager.getLogger(AFK_MOD_ID);
         log = true;
-        LOGGER.info("[{}] {}-{}-{}", AFK_MOD_ID, AFK_MOD_NAME, AFK_MC_VERSION, AFK_MOD_VERSION);
-        LOGGER.info("[{}] Author: {}", AFK_MOD_ID, AFK_MOD_AUTHO_STRING);
+        LOGGER.debug("[{}] Logger initalized.", AFK_MOD_ID);
     }
 
     public static void debug(String msg) {
