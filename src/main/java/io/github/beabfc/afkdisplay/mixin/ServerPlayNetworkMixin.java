@@ -25,7 +25,7 @@ public abstract class ServerPlayNetworkMixin {
         AfkPlayerData afkPlayer = (AfkPlayerData) player;
         int timeoutSeconds = CONFIG.packetOptions.timeoutSeconds;
         long afkDuration = Util.getMeasuringTimeMs() - this.player.getLastActionTime();
-        if (timeoutSeconds <= 0) {
+        if (afkPlayer.isAfk() || timeoutSeconds <= 0) {
             return;
         } else {
             if (afkDuration > timeoutSeconds * 1000L) {
