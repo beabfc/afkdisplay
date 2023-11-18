@@ -7,10 +7,10 @@
   "description": "Show which players are afk in the player list",
   "authors": [
     "beabfc",
-    "(forked by) sakura-ryoko"
+    "(fork by) sakura-ryoko"
   ],
   "contact": {
-    "homepage": "",
+    "homepage": "https://github.com/beabfc/afkdisplay",
     "sources": "https://github.com/beabfc/afkdisplay"
   },
 
