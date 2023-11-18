@@ -32,7 +32,7 @@ public class AfkDisplayInfo {
         AFK_AUTHO_STRING = getAuthoString();
         AFK_CONTRIB_STRING = getContribString();
         AFK_LICENSES_STRING = getLicenseString();
-        AFK_HOMEPAGE_STRING = getHomepageString();
+        // NOT USED: AFK_HOMEPAGE_STRING = getHomepageString();
         AFK_SOURCES_STRING = getSourcesString();
     }
 
@@ -121,14 +121,14 @@ public class AfkDisplayInfo {
         }
     }
 
-    private static String getHomepageString() {
-        String homepageString = AFK_CONTACTS.asMap().get("homepage");
-        if (homepageString == "" || homepageString == null) {
-            return "";
-        } else {
-            return homepageString;
-        }
-    }
+    // private static String getHomepageString() {
+    // String homepageString = AFK_CONTACTS.asMap().get("homepage");
+    // if (homepageString == "" || homepageString == null) {
+    // return "";
+    // } else {
+    // return homepageString;
+    // }
+    // }
 
     private static String getSourcesString() {
         String sourcesString = AFK_CONTACTS.asMap().get("sources");

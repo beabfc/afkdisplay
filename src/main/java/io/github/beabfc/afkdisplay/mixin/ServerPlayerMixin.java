@@ -16,6 +16,7 @@ import eu.pb4.placeholders.api.PlaceholderContext;
 import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.placeholders.api.TextParserUtils;
 import io.github.beabfc.afkdisplay.data.AfkPlayerData;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
@@ -100,7 +101,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayerData 
         this.server
                 .getPlayerManager()
                 .sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
-        // AfkDisplayLogger.info("sending player list update for " + player.getName());
+        AfkDisplayLogger.debug("sending player list update for " + player.getName());
 
     }
 

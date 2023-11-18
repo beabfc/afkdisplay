@@ -37,6 +37,7 @@ public class ConfigManager {
         CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK<r>";
         CONFIG.messageOptions.prettyDuration = true;
         CONFIG.messageOptions.defaultReason = "<gray>poof!<r>";
+        AfkDisplayLogger.debug("Default config initalized.");
     }
 
     public static void loadConfig() {
@@ -45,7 +46,7 @@ public class ConfigManager {
             if (conf.exists()) {
                 CONFIG = new Toml().read(conf).to(ConfigData.class);
             } else {
-                AfkDisplayLogger.info("Config not found, creating new file.");
+                AfkDisplayLogger.info("Config " + AFK_MOD_ID + ".toml not found, creating new file.");
                 initConfig();
                 conf.createNewFile();
             }

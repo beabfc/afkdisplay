@@ -1,10 +1,10 @@
 package io.github.beabfc.afkdisplay;
 
+import io.github.beabfc.afkdisplay.commands.CommandManager;
 import io.github.beabfc.afkdisplay.config.ConfigManager;
 import io.github.beabfc.afkdisplay.placeholders.AfkDisplayPlaceholders;
-import io.github.beabfc.afkdisplay.commands.CommandManager;
-import io.github.beabfc.afkdisplay.util.*;
-
+import io.github.beabfc.afkdisplay.util.AfkDisplayInfo;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import net.fabricmc.api.DedicatedServerModInitializer;
 
 public class AfkDisplay implements DedicatedServerModInitializer {
@@ -27,7 +27,7 @@ public class AfkDisplay implements DedicatedServerModInitializer {
             AfkDisplayPlaceholders.registerAfkReason();
             AfkDisplayLogger.debug("All Placeholders registerd.");
         } else {
-            AfkDisplayLogger.error("MOD running in a CLIENT Environment.  Disabling config.");
+            AfkDisplayLogger.warn("MOD running in a CLIENT Environment.  Disabling.");
         }
     }
 }
