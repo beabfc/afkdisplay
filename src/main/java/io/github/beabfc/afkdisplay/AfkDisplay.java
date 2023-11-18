@@ -2,7 +2,7 @@ package io.github.beabfc.afkdisplay;
 
 import io.github.beabfc.afkdisplay.commands.CommandManager;
 import io.github.beabfc.afkdisplay.config.ConfigManager;
-import io.github.beabfc.afkdisplay.placeholders.AfkDisplayPlaceholders;
+import io.github.beabfc.afkdisplay.placeholders.PlaceholderManager;
 import io.github.beabfc.afkdisplay.util.AfkDisplayInfo;
 import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import net.fabricmc.api.DedicatedServerModInitializer;
@@ -15,17 +15,14 @@ public class AfkDisplay implements DedicatedServerModInitializer {
         AfkDisplayInfo.initModInfo();
         AfkDisplayInfo.displayModInfo();
         if (AfkDisplayInfo.isServer()) {
-            AfkDisplayLogger.debug("Config Initalizing.");
+            AfkDisplayLogger.debug("Config Initializing.");
             ConfigManager.initConfig();
             ConfigManager.loadConfig();
+            AfkDisplayLogger.debug("Config successful, registering commands.");
             CommandManager.register();
-            AfkDisplayLogger.debug("Config successful, registering placeholders.");
-            AfkDisplayPlaceholders.registerAfk();
-            AfkDisplayPlaceholders.registerAfkDisplayName();
-            AfkDisplayPlaceholders.registerAfkDuration();
-            AfkDisplayPlaceholders.registerAfkTime();
-            AfkDisplayPlaceholders.registerAfkReason();
-            AfkDisplayLogger.debug("All Placeholders registerd.");
+            AfkDisplayLogger.debug("Command registrations done, registering placeholders.");
+            PlaceholderManager.registerPlaceholders();
+            AfkDisplayLogger.debug("All Placeholders registered.");
         } else {
             AfkDisplayLogger.warn("MOD running in a CLIENT Environment.  Disabling.");
         }
