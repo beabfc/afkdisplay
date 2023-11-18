@@ -2,14 +2,13 @@ package io.github.beabfc.afkdisplay.config;
 
 import static io.github.beabfc.afkdisplay.data.ModData.*;
 
-import io.github.beabfc.afkdisplay.data.ConfigData;
-import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
-
 import java.io.File;
 
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 
+import io.github.beabfc.afkdisplay.data.ConfigData;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class ConfigManager {
@@ -17,19 +16,22 @@ public class ConfigManager {
 
     public static void initConfig() {
         CONFIG.afkDisplayOptions.afkDisplayCommandPermissions = 3;
-        CONFIG.afkDisplayOptions.afkDisplayPlaceholder = "%player:displayname%";
-        CONFIG.afkDisplayOptions.afkDisplayPlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>";
-        CONFIG.afkDisplayOptions.afkPlaceholder = "<i><gray>[AFK]<r>";
         CONFIG.afkDisplayOptions.enableAfkCommand = true;
         CONFIG.afkDisplayOptions.enableAfkInfoCommand = true;
         CONFIG.afkDisplayOptions.afkCommandPermissions = 0;
         CONFIG.afkDisplayOptions.afkInfoCommandPermissions = 2;
+        CONFIG.afkDisplayOptions.afkTimeoutString = "<i><gray>timeout<r>";
         CONFIG.packetOptions.resetOnLook = false;
         CONFIG.packetOptions.resetOnMovement = false;
         CONFIG.packetOptions.timeoutSeconds = 180;
+        CONFIG.PlaceholderOptions.afkPlaceholder = "<i><gray>[AFK]<r>";
+        CONFIG.PlaceholderOptions.afkDisplayNamePlaceholder = "%player:displayname%";
+        CONFIG.PlaceholderOptions.afkDisplayNamePlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>";
+        CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting = "<green>";
+        CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting = "<green>";
+        CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting = "";
         CONFIG.playerListOptions.afkPlayerName = "<i><gray>[AFK] %player:displayname%<r>";
         CONFIG.playerListOptions.enableListDisplay = true;
-        CONFIG.playerListOptions.afkUpdateTime = -1;
         CONFIG.messageOptions.enableChatMessages = true;
         CONFIG.messageOptions.wentAfk = "%player:displayname% <yellow>is now AFK<r>";
         CONFIG.messageOptions.returned = "%player:displayname% <yellow>is no longer AFK<r>";

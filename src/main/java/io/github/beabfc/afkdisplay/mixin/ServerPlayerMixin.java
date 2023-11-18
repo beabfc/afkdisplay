@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import eu.pb4.placeholders.api.PlaceholderContext;
 import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.placeholders.api.TextParserUtils;
-//import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

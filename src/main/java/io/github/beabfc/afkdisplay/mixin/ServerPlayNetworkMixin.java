@@ -2,16 +2,14 @@ package io.github.beabfc.afkdisplay.mixin;
 
 import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
 
-import java.time.Duration;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import io.github.beabfc.afkdisplay.data.AfkPlayerData;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -27,30 +25,17 @@ public abstract class ServerPlayNetworkMixin {
         AfkPlayerData afkPlayer = (AfkPlayerData) player;
         int timeoutSeconds = CONFIG.packetOptions.timeoutSeconds;
         long afkDuration = Util.getMeasuringTimeMs() - this.player.getLastActionTime();
-        if (afkPlayer.isAfk()) {
-            if (CONFIG.playerListOptions.afkUpdateTime > 0) {
-                // Setting this afkTime value also has a positive side effect of updating the
-                // player list every now and then alone, but throwing updatePlayerList() is what
-                // we are trying to catch here to force an update every 60 seconds regardless.
-                // But without this, the player list will remain stale unless you /afkdisplay
-                // update [Player],
-                // Which also incidently can fix display update bugs in Styled Player List.
-                Duration afkTime = Duration.ofMillis(afkDuration);
-                Duration configTime = Duration.ofSeconds(CONFIG.playerListOptions.afkUpdateTime);
-                if (afkTime.toSeconds() > 0) {
-                    boolean isDiv = afkTime.toSeconds() % configTime.toSeconds() == 0;
-                    if (isDiv) {
-                        afkPlayer.updatePlayerList();
-                        AfkDisplayLogger.info("player list entry for " + player.getName() + " has been updated.");
-                    }
-                }
-            }
-            return;
-        } else if (timeoutSeconds <= 0) {
+        if (timeoutSeconds <= 0) {
             return;
         } else {
             if (afkDuration > timeoutSeconds * 1000L) {
-                afkPlayer.enableAfk("timeout");
+                if (CONFIG.afkDisplayOptions.afkTimeoutString == ""
+                        || CONFIG.afkDisplayOptions.afkTimeoutString == null) {
+                    afkPlayer.enableAfk("timeout");
+                } else {
+                    afkPlayer.enableAfk(CONFIG.afkDisplayOptions.afkTimeoutString);
+                }
+                AfkDisplayLogger.debug("Setting player " + this.player.getName() + " as AFK (timeout)");
             }
         }
     }

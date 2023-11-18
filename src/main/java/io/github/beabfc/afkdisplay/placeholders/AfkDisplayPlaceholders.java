@@ -2,13 +2,13 @@ package io.github.beabfc.afkdisplay.placeholders;
 
 import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
 import static io.github.beabfc.afkdisplay.data.ModData.*;
-import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import eu.pb4.placeholders.api.PlaceholderResult;
 import eu.pb4.placeholders.api.Placeholders;
 import eu.pb4.placeholders.api.TextParserUtils;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -23,7 +23,7 @@ public final class AfkDisplayPlaceholders {
             AfkPlayerData player = (AfkPlayerData) ctx.player();
             assert player != null;
             Text result = player.isAfk()
-                    ? Placeholders.parseText(TextParserUtils.formatText(CONFIG.afkDisplayOptions.afkPlaceholder),
+                    ? Placeholders.parseText(TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkPlaceholder),
                             ctx)
                     : Text.of("");
             return PlaceholderResult.value(result);
@@ -39,9 +39,9 @@ public final class AfkDisplayPlaceholders {
             assert player != null;
             Text result = player.isAfk()
                     ? Placeholders.parseText(
-                            TextParserUtils.formatText(CONFIG.afkDisplayOptions.afkDisplayPlaceholderAfk), ctx)
+                            TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkDisplayNamePlaceholderAfk), ctx)
                     : Placeholders.parseText(
-                            TextParserUtils.formatText(CONFIG.afkDisplayOptions.afkDisplayPlaceholder),
+                            TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkDisplayNamePlaceholder),
                             ctx);
             return PlaceholderResult.value(result);
         });
@@ -57,14 +57,18 @@ public final class AfkDisplayPlaceholders {
             if (CONFIG.messageOptions.prettyDuration) {
                 Text result = player.isAfk()
                         ? TextParserUtils.formatText(
-                                "<green>" + DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
-                                        player.afkTimeMs(), true, true))
+                                CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                                        + DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
+                                                player.afkTimeMs(), true, true)
+                                        + "</>")
                         : TextParserUtils.formatText("");
                 return PlaceholderResult.value(result);
             } else {
                 Text result = player.isAfk()
-                        ? TextParserUtils.formatText(DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
-                                player.afkTimeMs()))
+                        ? TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                                + DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
+                                        player.afkTimeMs())
+                                + "</>")
                         : TextParserUtils.formatText("");
                 return PlaceholderResult.value(result);
             }
@@ -78,7 +82,10 @@ public final class AfkDisplayPlaceholders {
             }
             AfkPlayerData player = (AfkPlayerData) ctx.player();
             assert player != null;
-            Text result = player.isAfk() ? TextParserUtils.formatText("<green>" + player.afkTimeString())
+            Text result = player.isAfk()
+                    ? TextParserUtils
+                            .formatText(CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting + player.afkTimeString()
+                                    + "</>")
                     : TextParserUtils.formatText("");
             return PlaceholderResult.value(result);
         });
@@ -91,10 +98,12 @@ public final class AfkDisplayPlaceholders {
             }
             AfkPlayerData player = (AfkPlayerData) ctx.player();
             assert player != null;
-            Text result = player.isAfk() ? TextParserUtils.formatText(player.afkReason())
+            Text result = player.isAfk()
+                    ? TextParserUtils
+                            .formatText(CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting + player.afkReason()
+                                    + "</>")
                     : TextParserUtils.formatText("");
             return PlaceholderResult.value(result);
         });
     };
-
 }

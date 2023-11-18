@@ -1,10 +1,6 @@
 package io.github.beabfc.afkdisplay.commands;
 
-import io.github.beabfc.afkdisplay.util.AfkDisplayInfo;
-import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
 import static io.github.beabfc.afkdisplay.config.ConfigManager.*;
-import io.github.beabfc.afkdisplay.config.ConfigManager;
-import io.github.beabfc.afkdisplay.data.AfkPlayerData;
 import static net.minecraft.server.command.CommandManager.*;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -12,6 +8,11 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 
 import eu.pb4.placeholders.api.TextParserUtils;
+import io.github.beabfc.afkdisplay.config.ConfigManager;
+import io.github.beabfc.afkdisplay.data.AfkPlayerData;
+import io.github.beabfc.afkdisplay.util.AfkDisplayInfo;
+import io.github.beabfc.afkdisplay.util.AfkDisplayLogger;
+import io.github.beabfc.afkdisplay.util.AfkPlayerInfo;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
@@ -131,7 +132,7 @@ public class AfkDisplayCommand {
                 AfkPlayerData afkPlayer = (AfkPlayerData) player;
                 String user = src.getName();
                 String target = player.getEntityName();
-                String AfkStatus = AfkDisplayInfo.getAfkInfoString(afkPlayer, user, target);
+                String AfkStatus = AfkPlayerInfo.getString(afkPlayer, user, target);
                 context.getSource().sendFeedback(() -> TextParserUtils.formatText(AfkStatus), false);
                 return 1;
         }
