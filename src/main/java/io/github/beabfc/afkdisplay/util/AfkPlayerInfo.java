@@ -17,31 +17,41 @@ public class AfkPlayerInfo {
                 if (afkPlayer.afkReason() == "") {
                     AfkStatus = "<bold><light_purple>AFK Information:"
                             + "<r>\nPlayer: " + target
-                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
-                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationWords(duration, true, true)
+                            + "<r>\nAfk Since: " + CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting
+                            + afkPlayer.afkTimeString() + "<r> (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: " + CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                            + DurationFormatUtils.formatDurationWords(duration, true, true)
                             + "<r>\nReason: none";
                 } else {
                     AfkStatus = "<bold><light_purple>AFK Information:"
                             + "<r>\nPlayer: " + target
-                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
-                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationWords(duration, true, true)
-                            + "<r>\nReason: " + afkPlayer.afkReason();
+                            + "<r>\nAfk Since: " + CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting
+                            + afkPlayer.afkTimeString() + "<r> (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: " + CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                            + DurationFormatUtils.formatDurationWords(duration, true, true)
+                            + "<r>\nReason: " + CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting
+                            + afkPlayer.afkReason();
                 }
             } else {
                 if (afkPlayer.afkReason() == "") {
                     AfkStatus = "<bold><light_purple>AFK Information:"
                             + "<r>\nPlayer: " + target
-                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
-                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                            + "ms (Format:HH:mm:ss)"
+                            + "<r>\nAfk Since: " + CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting
+                            + afkPlayer.afkTimeString() + "<r> (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: " + CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                            + DurationFormatUtils.formatDurationHMS(duration)
+                            + "<r>ms (Format:HH:mm:ss)"
                             + "<r>\nReason: none";
                 } else {
                     AfkStatus = "<bold><light_purple>AFK Information:"
                             + "<r>\nPlayer: " + target
-                            + "<r>\nAfk Since: <green>" + afkPlayer.afkTimeString() + " (Format:yyyy-MM-dd_HH.mm.ss)"
-                            + "<r>\nDuration: <green>" + DurationFormatUtils.formatDurationHMS(duration)
-                            + "ms (Format:HH:mm:ss)"
-                            + "<r>\nReason: " + afkPlayer.afkReason();
+                            + "<r>\nAfk Since: " + CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting
+                            + afkPlayer.afkTimeString() + "<r> (Format:yyyy-MM-dd_HH.mm.ss)"
+                            + "<r>\nDuration: " + CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                            + DurationFormatUtils.formatDurationHMS(duration)
+                            + "<r>ms (Format:HH:mm:ss)"
+                            + "<r>\nReason: " + CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting
+                            + afkPlayer.afkReason();
                 }
             }
             AfkDisplayLogger.info(user + " displayed " + target + "'s AFK info.");
