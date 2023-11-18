@@ -44,8 +44,8 @@ public class AfkDisplayInfo {
     public static Text getModInfoText() {
         String modInfo1 = AFK_MOD_ID + "-" + AFK_MC_VERSION + "-" + AFK_VERSION;
         String modInfo2 = "Author: <light_purple>" + AFK_AUTHO_STRING + "</light_purple>";
-        String modInfo3 = "License: " + AFK_LICENSES_STRING;
-        String modInfo4 = "Source: <url:'" + AFK_SOURCES_STRING + "'>" + AFK_SOURCES_STRING + "</url>";
+        String modInfo3 = "License: <yellow>" + AFK_LICENSES_STRING + "</yellow>";
+        String modInfo4 = "Source: <aqua><url:'" + AFK_SOURCES_STRING + "'>" + AFK_SOURCES_STRING + "</url></aqua>";
         String modInfo5 = "Description: " + AFK_DESC;
 
         Text info = TextParserUtils

@@ -66,12 +66,12 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayerData 
             setAfkReason("<red>none");
         } else if (reason == null || reason == "") {
             setAfkReason("<red>none");
-            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk),
+            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatTextSafe(CONFIG.messageOptions.wentAfk),
                     PlaceholderContext.of(this)));
         } else {
             setAfkReason(reason);
             sendAfkMessage(
-                    Placeholders.parseText(TextParserUtils.formatText(CONFIG.messageOptions.wentAfk
+                    Placeholders.parseText(TextParserUtils.formatTextSafe(CONFIG.messageOptions.wentAfk
                             + "<yellow>,<r> " + reason),
                             PlaceholderContext.of(this)));
         }
@@ -85,12 +85,12 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayerData 
             long duration = Util.getMeasuringTimeMs() - (this.afkTimeMs);
             String ret = CONFIG.messageOptions.returned + " <gray>(Gone for: <green>"
                     + DurationFormatUtils.formatDurationWords(duration, true, true) + "<gray>)<r>";
-            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(ret), PlaceholderContext.of(this)));
+            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatTextSafe(ret), PlaceholderContext.of(this)));
         } else {
             long duration = Util.getMeasuringTimeMs() - (this.afkTimeMs);
             String ret = CONFIG.messageOptions.returned + " <gray>(Gone for: <green>"
                     + DurationFormatUtils.formatDurationHMS(duration) + "<gray>)<r>";
-            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatText(ret), PlaceholderContext.of(this)));
+            sendAfkMessage(Placeholders.parseText(TextParserUtils.formatTextSafe(ret), PlaceholderContext.of(this)));
         }
         setAfk(false);
         clearAfkTime();
@@ -159,7 +159,7 @@ public abstract class ServerPlayerMixin extends Entity implements AfkPlayerData 
     private void replacePlayerListName(CallbackInfoReturnable<Text> cir) {
         if (CONFIG.playerListOptions.enableListDisplay && isAfk) {
             Text listEntry = Placeholders.parseText(
-                    TextParserUtils.formatText(CONFIG.playerListOptions.afkPlayerName),
+                    TextParserUtils.formatTextSafe(CONFIG.playerListOptions.afkPlayerName),
                     PlaceholderContext.of(this));
             cir.setReturnValue(listEntry.copy());
         }

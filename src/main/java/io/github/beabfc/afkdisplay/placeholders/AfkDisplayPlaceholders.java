@@ -23,7 +23,7 @@ public final class AfkDisplayPlaceholders {
             AfkPlayerData player = (AfkPlayerData) ctx.player();
             assert player != null;
             Text result = player.isAfk()
-                    ? Placeholders.parseText(TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkPlaceholder),
+                    ? Placeholders.parseText(TextParserUtils.formatTextSafe(CONFIG.PlaceholderOptions.afkPlaceholder),
                             ctx)
                     : Text.of("");
             return PlaceholderResult.value(result);
@@ -39,9 +39,9 @@ public final class AfkDisplayPlaceholders {
             assert player != null;
             Text result = player.isAfk()
                     ? Placeholders.parseText(
-                            TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkDisplayNamePlaceholderAfk), ctx)
+                            TextParserUtils.formatTextSafe(CONFIG.PlaceholderOptions.afkDisplayNamePlaceholderAfk), ctx)
                     : Placeholders.parseText(
-                            TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkDisplayNamePlaceholder),
+                            TextParserUtils.formatTextSafe(CONFIG.PlaceholderOptions.afkDisplayNamePlaceholder),
                             ctx);
             return PlaceholderResult.value(result);
         });
@@ -56,20 +56,20 @@ public final class AfkDisplayPlaceholders {
             assert player != null;
             if (CONFIG.messageOptions.prettyDuration) {
                 Text result = player.isAfk()
-                        ? TextParserUtils.formatText(
+                        ? TextParserUtils.formatTextSafe(
                                 CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
                                         + DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
                                                 player.afkTimeMs(), true, true)
                                         + "</>")
-                        : TextParserUtils.formatText("");
+                        : TextParserUtils.formatTextSafe("");
                 return PlaceholderResult.value(result);
             } else {
                 Text result = player.isAfk()
-                        ? TextParserUtils.formatText(CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
+                        ? TextParserUtils.formatTextSafe(CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
                                 + DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
                                         player.afkTimeMs())
                                 + "</>")
-                        : TextParserUtils.formatText("");
+                        : TextParserUtils.formatTextSafe("");
                 return PlaceholderResult.value(result);
             }
         });
@@ -84,9 +84,10 @@ public final class AfkDisplayPlaceholders {
             assert player != null;
             Text result = player.isAfk()
                     ? TextParserUtils
-                            .formatText(CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting + player.afkTimeString()
-                                    + "</>")
-                    : TextParserUtils.formatText("");
+                            .formatTextSafe(
+                                    CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting + player.afkTimeString()
+                                            + "</>")
+                    : TextParserUtils.formatTextSafe("");
             return PlaceholderResult.value(result);
         });
     };
@@ -100,9 +101,10 @@ public final class AfkDisplayPlaceholders {
             assert player != null;
             Text result = player.isAfk()
                     ? TextParserUtils
-                            .formatText(CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting + player.afkReason()
-                                    + "</>")
-                    : TextParserUtils.formatText("");
+                            .formatTextSafe(
+                                    CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting + player.afkReason()
+                                            + "</>")
+                    : TextParserUtils.formatTextSafe("");
             return PlaceholderResult.value(result);
         });
     };
