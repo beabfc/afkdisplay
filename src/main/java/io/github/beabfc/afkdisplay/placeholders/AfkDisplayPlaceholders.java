@@ -103,7 +103,7 @@ public final class AfkDisplayPlaceholders {
                     ? TextParserUtils
                             .formatTextSafe(
                                     CONFIG.PlaceholderOptions.afkReasonPlaceholderFormatting + player.afkReason()
-                                            + "</>")
+                                            + "<r>")
                     : TextParserUtils.formatTextSafe("");
             return PlaceholderResult.value(result);
         });
