@@ -24,4 +24,5 @@ public class ModData {
     // NOT USED: public static String AFK_HOMEPAGE_STRING;
     public static String AFK_SOURCES_STRING;
     public static String AFK_LICENSES_STRING;
+    public static boolean AFK_DEBUG;
 }

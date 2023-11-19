@@ -20,7 +20,10 @@
   "environment": "server",
   "entrypoints": {
     "server": [
-      "io.github.beabfc.afkdisplay.AfkDisplay"
+      "io.github.beabfc.afkdisplay.AfkDisplayServer"
+    ],
+    "main": [
+      "io.github.beabfc.afkdisplay.AfkDisplayMain"
     ]
   },
   "mixins": [

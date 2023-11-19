@@ -16,8 +16,12 @@ public class AfkDisplayLogger {
     }
 
     public static void debug(String msg) {
-        if (log)
-            LOGGER.debug("[{}] " + msg, AFK_MOD_ID);
+        if (log) {
+            if (AFK_DEBUG)
+                LOGGER.info("[{}:DEBUG] " + msg, AFK_MOD_ID);
+            else
+                LOGGER.debug("[{}] " + msg, AFK_MOD_ID);
+        }
     }
 
     public static void info(String msg) {
