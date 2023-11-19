@@ -60,7 +60,7 @@ public final class AfkDisplayPlaceholders {
                                 CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
                                         + DurationFormatUtils.formatDurationWords(Util.getMeasuringTimeMs() -
                                                 player.afkTimeMs(), true, true)
-                                        + "</>")
+                                        + "<r>")
                         : TextParserUtils.formatTextSafe("");
                 return PlaceholderResult.value(result);
             } else {
@@ -68,7 +68,7 @@ public final class AfkDisplayPlaceholders {
                         ? TextParserUtils.formatTextSafe(CONFIG.PlaceholderOptions.afkDurationPlaceholderFormatting
                                 + DurationFormatUtils.formatDurationHMS(Util.getMeasuringTimeMs() -
                                         player.afkTimeMs())
-                                + "</>")
+                                + "<r>")
                         : TextParserUtils.formatTextSafe("");
                 return PlaceholderResult.value(result);
             }
@@ -86,7 +86,7 @@ public final class AfkDisplayPlaceholders {
                     ? TextParserUtils
                             .formatTextSafe(
                                     CONFIG.PlaceholderOptions.afkTimePlaceholderFormatting + player.afkTimeString()
-                                            + "</>")
+                                            + "<r>")
                     : TextParserUtils.formatTextSafe("");
             return PlaceholderResult.value(result);
         });

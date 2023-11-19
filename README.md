@@ -17,6 +17,7 @@
 - Added a placeholder **%afkdisplay:reason%** so that you can port the Afk Reason for why someone went AFK, with configuration for a format prefix.
 - [RENAME] renamed the **'%player:afk%**' placeholder to **'%afkdisplay:afk%'** based on PatBox's feedback.  They prefer that people use **'mod_name:<example>'** for their mods.
 - Added a special configuration option 'prettyDuration' to configure the AFK Duration in a more human-readable format.
+- Added several mod / data pack conflict warnings for administrator's to help them make better decisions on what mods they want to install.
 
 ## Original README:
 Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support, **[ENHANCEMENT]** now supporting all Placeholder API formatting nodes such as: yellow or bold natively; which depreciates all of the old "color" specific settings.
@@ -53,16 +54,19 @@ resetOnLook = false
 
 [PlaceholderOptions]
 # This will be the value of the placeholder %afkdisplay:afk% if a player is AFK, [ENHANCEMENT] option now accepts full formatting nodes (Default: "<i><gray>[AFK]<r>")
+#   -- note; *DOES NOT* places an "<r>" at the end in the code (trying not to modify its original behavior)
 afkPlaceholder = "<i><gray>[AFK]<r>"
 # [ENHANCEMENT] a new placeholder %afkdisplay:name% for backporting the entire %displayname% for use in other Mods, such as Styled Playerlist (Default: "<i><gray>[AFK] %player:displayname_unformatted%<r>")
+#   -- note; *DOES NOT* places an "<r>" at the end in the code (trying not to modify its default behavior)
 afkDisplayNamePlaceholderAfk = "<i><gray>[AFK] %player:displayname_unformatted%<r>"
 # [ENHANCEMENT] value for when player is NOT AFK, (ie. the default "%player:displayname%")
+#   -- note; *DOES NOT* places an "<r>" at the end in the code (trying not to modify its default behavior)
 afkDisplayNamePlaceholder = "%player:displayname%"
-# Adds a formatting prefix node for %afkdisplay:duration% (default: <green>)
+# Adds a formatting prefix node for %afkdisplay:duration% (default: <green>) -- note; places an "<r>" at the end in the code.
 afkDurationPlaceholderFormatting = "<green>"
-# Adds a formatting prefix node for %afkdisplay:time% (default: <green>)
+# Adds a formatting prefix node for %afkdisplay:time% (default: <green>) -- note; places an "<r>" at the end in the code.
 afkTimePlaceholderFormatting = "<green>"
-# Adds a formatting prefix node for %afkdisplay:reason% (default: none)
+# Adds a formatting prefix node for %afkdisplay:reason% (default: none) -- note; places an "<r>" at the end in the code.
 afkReasonPlaceholderFormatting = ""
 
 [playerListOptions]
