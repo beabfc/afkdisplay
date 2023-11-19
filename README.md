@@ -1,12 +1,12 @@
 ## AfkDisplay
 
-**SAKURAS-ENHANCEMENTS** :blush:
-- Added '**/afkdisplay reload**' command.  This allows an Administrator to reload the configuration while the server is running.
-- Added '**/afkdisplay set [Player] [Reason]**' command.  This allows any administrator to set the AFK status of a player.
-- Added '**/afkdisplay clear [Player]**' command.  This allows any administrator to clear the AFK status of a player.
-- Added '**/afkdisplay info [Player]**' command.  This allows any administrator to check the AFK status of a player, and display the time and duration since they went AFK.
-- Added '**/afkdisplay update [Player]**' command.  This allows any administrator to force a player list update for a player.
-- Added '**/afkinfo [Player]**' command.  Does the same thing as /afkdisplay info, but can be used for Mods, or players, or however you like to configure it for people to see.
+**SAKURAS-ENHANCEMENTS** :blush:  *(Bump to version 1.3.2)*
+- Added '**/afkdisplay reload**' command.  This allows an Administrator to reload the configuration while the server is running. (Permission: afkdisplay.afkdisplay.reload)
+- Added '**/afkdisplay set [Player] [Reason]**' command.  This allows any administrator to set the AFK status of a player. (Permission: afkdisplay.afkdisplay.set)
+- Added '**/afkdisplay clear [Player]**' command.  This allows any administrator to clear the AFK status of a player. (Permission: afkdisplay.afkdisplay.clear)
+- Added '**/afkdisplay info [Player]**' command.  This allows any administrator to check the AFK status of a player, and display the time and duration since they went AFK. (Permission: afkdisplay.afkdisplay.info)
+- Added '**/afkdisplay update [Player]**' command.  This allows any administrator to force a player list update for a player. (Permission: afkdisplay.afkdisplay.update)
+- Added '**/afkinfo [Player]**' command.  Does the same thing as /afkdisplay info, but can be used for Mods, or players, or however you like to configure it for people to see. (Permission: afkdisplay.afkinfo)
 - [ENHANCEMENT] Added '**/afk [Reason]**' This allows any user to use a [Reason] along with setting their AKF status.
 - ***[REWRITE]***: Complete rewrite of the Config File manager to allow the '**/afkdisplay reload**' command to work.
 - **[PERMISSIONS]**: Added a security permissions for the '**/afkdisplay**' command via [Luck Permissions](https://luckperms.net/) with the AfkDisplayCommandPermissions setting the default restrictions, the '**/afk**' and '**/afkinfo**' command also has restrictions using AfkCommandPermissions/AfkInfoCommandPermissions setting as well.
@@ -16,7 +16,7 @@
 - Added a placeholder **%afkdisplay:time%** so that you can get the Time/Date when someone went AFK, with configuration for a format prefix.
 - Added a placeholder **%afkdisplay:reason%** so that you can port the Afk Reason for why someone went AFK, with configuration for a format prefix.
 - [RENAME] renamed the **'%player:afk%**' placeholder to **'%afkdisplay:afk%'** based on PatBox's feedback.  They prefer that people use **'mod_name:<example>'** for their mods.
-- Added a special configuration option 'prettyDuration' to configure the AFK Duration in a more human-readable format.
+- Added a special configuration option 'prettyDuration' to configure the AFK Duration in a more human-readable format, instead of the default (HH:mm:ss.mss) Apache format, each method has it's advantages though. ([Styled Nicknames](https://modrinth.com/mod/styled-nicknames) or [Styled Chat](https://modrinth.com/mod/styled-chat) comes to mind here)
 - Added several mod / data pack conflict warnings for administrator's to help them make better decisions on what mods they want to install.
 
 ## Original README:
@@ -39,7 +39,7 @@ enableAfkInfoCommand = true
 afkCommandPermissions = 0
 # [ENHANCEMENT] config for the /afkinfo default command permissions, configurable with Luck Perms (afkdisplay.afkinfo) node (Usually for Mods) (Default: 2)
 afkInfoCommandPermissions = 2
-# [ENHANCEMENT] config for the /afkdisplay default command permissions, configurable with Luck Perms (afkdisplay.afkdisplay.*) node (Default: 3)
+# [ENHANCEMENT] config for the /afkdisplay default command permissions, configurable with Luck Perms (afkdisplay.afkdisplay with subcommand nodes) node (Default: 3)
 afkDisplayCommandPermissions = 3
 # The default "timeout" AFK reason (Default: "<i><gray>timeout<r>")
 afkTimeoutString = "<i><gray>timeout<r>"
