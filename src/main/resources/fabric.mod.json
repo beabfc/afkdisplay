@@ -22,9 +22,7 @@
     "server": [
       "io.github.beabfc.afkdisplay.AfkDisplayServer"
     ],
-    "main": [
-      "io.github.beabfc.afkdisplay.AfkDisplayMain"
-    ]
+    "main": []
   },
   "mixins": [
     "afkdisplay.mixins.json"
