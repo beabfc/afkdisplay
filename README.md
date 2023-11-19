@@ -19,6 +19,13 @@
 - Added a special configuration option 'prettyDuration' to configure the AFK Duration in a more human-readable format, instead of the default (HH:mm:ss.mss) Apache format, each method has it's advantages though. ([Styled Nicknames](https://modrinth.com/mod/styled-nicknames) or [Styled Chat](https://modrinth.com/mod/styled-chat) comes to mind here)
 - Added several mod / data pack conflict warnings for administrator's to help them make better decisions on what mods they want to install.
 
+## Potential MOD known conflicts (Make your choice)
+- [afk display Data pack](https://vanillatweaks.net/picker/datapacks/) (Vanilla Tweaks Data pack, changes player list display) -- Mod checks for any "afk" containing data packs in the name.
+- [SvrUtil](https://modrinth.com/mod/svrutil) (/afk command, rest is safe)
+- [AntiLogout](https://modrinth.com/mod/noexits) (/afk command, timeout handling)
+- [Sessility](https://modrinth.com/mod/sessility) (timeout handling)
+- [Playtime-Tracker](https://modrinth.com/mod/playtime-tracker) (timeout handling)
+
 ## Original README:
 Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support, **[ENHANCEMENT]** now supporting all Placeholder API formatting nodes such as: yellow or bold natively; which depreciates all of the old "color" specific settings.
 
