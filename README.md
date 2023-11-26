@@ -1,3 +1,8 @@
+> ⚠️ **No longer mantained!** ⚠️ \
+> As of 26/11/2023 this project is no longer maintained. \
+> Please use [@sakura-ryoko](https://github.com/sakura-ryoko)'s updated fork **[sakura-ryoko/afkplus](https://github.com/sakura-ryoko/afkplus)** instead.
+
+
 # AfkDisplay
 
 Show which players are AFK in the player list. Fully configurable and with [Placeholder API](https://placeholders.pb4.eu/user/general/) support.
